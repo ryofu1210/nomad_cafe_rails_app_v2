@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: nomad_cafe_rails_app_v2_dev
+
+test:
+  <<: *default
+  database: nomad_cafe_rails_app_v2_test
+
+production:
+  <<: *default
+  database: nomad_cafe_rails_app_v2_prod
