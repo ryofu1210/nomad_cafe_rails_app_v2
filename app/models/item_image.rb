@@ -8,4 +8,7 @@
 
 class ItemImage < ApplicationRecord
   has_one :item, as: :target, dependent: :destroy
+
+  mount_uploader :image, ItemImageUploader
+
 end

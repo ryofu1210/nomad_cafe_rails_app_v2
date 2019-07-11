@@ -20,4 +20,6 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_many :items
+
+  mount_uploader :image, PostImageUploader
 end

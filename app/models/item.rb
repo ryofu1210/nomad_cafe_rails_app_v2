@@ -12,4 +12,10 @@
 class Item < ApplicationRecord
   belongs_to :post
   belongs_to :target, polymorphic: true
+
+  enum target_type: {
+    heading: 'ItemHeading',
+    text: 'ItemText',
+    image: 'ItemImage',
+  }
 end
