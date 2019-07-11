@@ -16,3 +16,25 @@
 // const imagePath = (name) => images(name, true)
 
 console.log('Hello World from Webpacker')
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Vuex from 'vuex';
+import App from '../app';
+import PostEditView from '../components/PostEditView';
+
+import router from '../routes';
+import store from '../store';
+
+Vue.use(VueRouter);
+Vue.use(Vuex); //store/index.js内で呼ぶ
+
+document.addEventListener('DOMContentLoaded',() => {
+  new Vue({
+    el:'#application',
+    // store: new Vuex.Store(store),
+    store: store,
+    router,
+    // render: (h) => h(KbnBoardView),
+    render: (h) => h(PostEditView),
+  });
+});
