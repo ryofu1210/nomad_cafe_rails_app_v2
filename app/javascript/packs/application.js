@@ -35,6 +35,6 @@ document.addEventListener('DOMContentLoaded',() => {
     store: store,
     router,
     // render: (h) => h(KbnBoardView),
-    render: (h) => h(PostEditView),
+    render: (h) => h(App),
   });
 });

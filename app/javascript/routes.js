@@ -6,7 +6,8 @@ const routes = [
 {
   path: '/back/posts/:id/edit', 
   component: PostEditView,
+  name: 'PostEditView'
 },
 ]
 
-export default new VueRouter({ routes });
+export default new VueRouter({ mode: 'history', routes });

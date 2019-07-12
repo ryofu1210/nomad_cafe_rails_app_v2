@@ -15,9 +15,9 @@ ActiveRecord::Base.transaction do
     user = FactoryBot.create(:user)
     2.times do
       post = FactoryBot.create(:post, user: user)
-      FactoryBot.create(:item, :heading, post: post)
-      FactoryBot.create(:item, :text, post: post)
-      FactoryBot.create(:item, :image, post: post)
+      FactoryBot.create(:item, :heading, sortrank: 1, post: post)
+      FactoryBot.create(:item, :text, sortrank: 2, post: post)
+      FactoryBot.create(:item, :image, sortrank: 3, post: post)
     end
   end
 end

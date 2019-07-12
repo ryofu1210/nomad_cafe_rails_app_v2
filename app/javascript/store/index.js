@@ -7,6 +7,7 @@ import actions from './actions';
 Vue.use(Vuex);
 
 const state = {
+  items: []
 };
 
 export default new Vuex.Store({

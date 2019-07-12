@@ -10,12 +10,16 @@
 #
 
 class Item < ApplicationRecord
-  belongs_to :post
+  belongs_to :post, touch: true
   belongs_to :target, polymorphic: true
 
-  enum target_type: {
-    heading: 'ItemHeading',
-    text: 'ItemText',
-    image: 'ItemImage',
-  }
+  # enum target_type: {
+  #   heading: 'ItemHeading',
+  #   text: 'ItemText',
+  #   image: 'ItemImage',
+  # }
+
+  validates :sort_rank, presence: true
+  # validates :target_type, presence: true, inclusion: { in: Item.target_types.keys }
+
 end
