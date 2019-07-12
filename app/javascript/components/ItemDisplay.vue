@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>ItemDisplay</h1>
+    <!-- <h1>ItemDisplay</h1> -->
     <!-- <p>{{ item }}</p> -->
     <ItemDisplayHeading 
       v-if="item.target_type === 'ItemHeading'" 

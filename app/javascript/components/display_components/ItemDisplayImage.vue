@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h1>ItemDisplayImage</h1>
+  <div class="item-display__imgbox">
+    <!-- <h1>ItemDisplayImage</h1> -->
+    <img class="item-display__img" :src="item.image.url">
+    <!-- {{item}} -->
   </div>
 </template>
 
@@ -17,4 +19,12 @@ export default {
 </script>
 
 <style scoped>
+.item-display__imgbox{
+  width:400px;
+  height: auto;
+}
+.item-display__img{
+  width:100%;
+  height:100%;
+}
 </style>

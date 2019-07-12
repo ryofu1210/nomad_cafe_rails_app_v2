@@ -19,7 +19,7 @@ class Item < ApplicationRecord
   #   image: 'ItemImage',
   # }
 
-  validates :sort_rank, presence: true
+  validates :sortrank, presence: true
   # validates :target_type, presence: true, inclusion: { in: Item.target_types.keys }
 
 end

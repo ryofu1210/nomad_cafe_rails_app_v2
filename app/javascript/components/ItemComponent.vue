@@ -1,22 +1,28 @@
 <template>
-  <div class="item-component">
-    <h1>ItemComponentList</h1>
-    <div>
-      {{ item.sortrank }}
-    </div>
-    <div>
+  <div class="item-component__box" @mouseover="menuShown = true" @mouseleave="menuShown = false">
+    <div class="item-component__menu" v-if="menuShown && !editing">
       <button @click="handleDown(sortrank, totalcount)">下に移動</button>
       <button @click="handleUp(sortrank)">上に移動</button>
-      <button @click="handleUpdate">修正</button>
-      <button @click="handleDelete">削除</button>
+      <button 
+        v-if="!editing" 
+        @click="handleEditingStart(sortrank)"
+      >
+      修正
+      </button>
+      <button @click="handleDelete(sortrank)">削除</button>
     </div>
-    <div class="component">
+    <div class="item-component__content">
       <ItemForm 
         v-if="editing === true" 
         :item="item" 
-        @editing-event="UpdateEditing"
+        :sortrank="sortrank"
+        :totalcount="totalcount"
+        @editing-event="handleEditingFinish(sortrank)"
       />
-      <ItemDisplay v-else :item="item" />
+      <ItemDisplay 
+        v-else 
+        :item="item" 
+      />
     </div>
   </div>
 </template>
@@ -31,12 +37,6 @@ export default {
   components: {
     ItemDisplay,
     ItemForm
-  },
-
-  data (){
-    return{
-      editing: false
-    }
   },
 
   props: {
@@ -55,7 +55,27 @@ export default {
     }
   },
 
+  data (){
+    return {
+      menuShown: false,
+    }
+  },
+
+  computed: {
+    editing(){
+      return this.item.editing
+    }
+  },
+
   methods: {
+    // changeMenuShown (){
+    //   if(this.menuShown === true){
+    //     this.menuShown = false
+    //   }else{
+    //     this.menuShown = true
+    //   }
+    // },
+
     handleDown (sortrank, totalcount){
       this.$store.dispatch('moveItemDown',{sortrank, totalcount})
     },
@@ -64,16 +84,23 @@ export default {
       this.$store.dispatch('moveItemUp',{sortrank})
     },
 
-    handleUpdate(){
-      this.editing = true
+    handleEditingStart(sortrank){
+      const newItem = {editing: true}
+      this.$store.dispatch('updateItem', {newItem: newItem, sortrank: sortrank})
     },
+
+    // handleEditing(sortrank){
+    //   this.$store.dispatch('changeEditing',{sortrank})
+    // },
 
     handleDelete (sortrank){
       this.$store.dispatch('deleteItem',{sortrank})
     },
 
-    UpdateEditing(){
-      this.editing = false
+    handleEditingFinish(sortrank){
+      // console.log()
+      const newItem = {editing: false}
+      this.$store.dispatch('updateItem', {newItem: newItem, sortrank: sortrank})
     }
 }
 
@@ -82,7 +109,19 @@ export default {
 </script>
 
 <style scoped>
-.item-component{
-  border: 1px solid black;
+.item-component__box{
+  position: relative;
 }
+.item-component__menu{
+  /* display:fixed; */
+  position: absolute;
+  top:100;
+  left:0;
+}
+.item-component__content{
+  min-height: 50px;
+  padding:10px 0 0 0;
+  margin-bottom:30px;
+}
+
 </style>

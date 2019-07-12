@@ -1,4 +1,5 @@
-json.array! @items
+json.post @post
+json.items @items_params
 # json.array! @items do |item|
 #   item.target
 # end

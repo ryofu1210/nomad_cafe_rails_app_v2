@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   namespace :back do
     resources :posts, only: %w(index show new edit)
   end
-  namespace :api do
-    resources :posts, only: %(show)
+  namespace :api, {format: 'json'} do
+    resources :posts, only: %w(show update)
   end
 
   devise_for :users

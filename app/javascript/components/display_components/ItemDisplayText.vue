@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>ItemDisplayText</h1>
-    <p>{{ item.body }}</p>
+    <!-- <h1>ItemDisplayText</h1> -->
+    <p class="text">{{ item.body }}</p>
   </div>
 
 </template>
@@ -19,4 +19,7 @@ export default {
 </script>
 
 <style scoped>
+.text{
+  fonts-size:15px;
+}
 </style>
