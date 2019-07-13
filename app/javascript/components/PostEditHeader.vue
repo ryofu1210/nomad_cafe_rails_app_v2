@@ -1,80 +1,82 @@
 <template>
-  <div class="item-form">
-    <p class="item-form__header">イメージ</p>
-    <!-- <div class="item-form__content">
-      <div class="item-form__content-imgbox">
-        <img class="item-form__content-img" :src="image.url">
-        <p>{{dataImage.url}}</p>
-      </div>
-      <input 
-        type="file" 
-        class="item-form__file"
-      >
-    </div> -->
-    <div class="item-form__content-imgbox">
+  <div>
+    {{ post.image }}
+    <div>
+      <label>Name</label>
+      <input type="text" v-model="dataname" >
+    </div>
+    <div>
+      <label>Description</label>
+      <textarea v-model="post.description" ></textarea>
+    </div>
+    <div class="header-image__box">
       <label>画像</label>
       <input type="file" @change="handleUploadFile">
       <div class="preview-item">
         <p class="preview-item-name">{{ imageName }}</p>
         <img
-          v-show="imagePath"
-          class="item-form__content-img"
+          class="preview-item-file"
           :src="imagePath"
           alt=""
         />
-        {{imagePath}}
       </div>
-    </div>
-    <div>
-      <button 
-        @click="handleUpdate(imagePath, sortrank)"
-      >
-      閉じる
-      </button>
-      <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>
 </template>
 
 <script>
+// import PostEditHeder from './PostEditHeader';
+// import { setTimeout } from 'timers';
+
 export default {
-  name: 'ItemFormImage',
+  name: 'PostEditHeader',
 
   props: {
-    // item: {
-    //   type:Object
-    // }
-    image: {
-      type:String
-    },
-
-    sortrank: {
-      type:Number,
-      required: true
-    },
-
-    totalcount: {
-      type:Number,
-      required: true
+    post: {
+      type: Object,
+      required:true
     }
   },
 
-  data (){
+  data() {
     return{
-      imagePath: this.image,
-      imageName:''
+      dataname:this.post.name,
+      imagePath: this.post.image,
+      imageName: '',
     }
   },
+
+  // mounted(){
+  //   this.loadImage(this.post.name)
+  // },
+
+
+  // computed: {
+  //   returnImage(){
+  //     this.imagePath = this.post.image
+  //     return this.imagePath
+  //   }
+  // },
 
   methods: {
+    // loadImage(name){
+    //   console.log(name)
+    //   this.dataName = "aaaaaaaa"
+    //   this.imagePath = this.post.image
+    //   this.post.image = this.post.image
+    // },
+
+
+
     handleUpdate(imagePath, sortrank){
       const newItem = {image:imagePath}
       this.$store.dispatch('updateItem', {newItem:newItem,sortrank:sortrank})
-      this.$emit("editing-event")
+      // this.$emit("editing-event")
       // console.log(this.$store.state.items)
     },
 
     handleUploadFile(e){
+      console.log(this.post.name)
       // console.log(e)
       const files = e.target.files || e.dataTransfer.files;
       this.createImage(files[0])
@@ -95,13 +97,13 @@ export default {
 </script>
 
 <style scoped>
-.item-form__content-imgbox{
-  width:100px;
+.header-image__box{
+  width:400px;
   height:auto;
 }
-
-.item-form__content-img{
+.preview-item-file{
   width:100%;
-  height: 100%;
+  height:100%;
 }
+
 </style>

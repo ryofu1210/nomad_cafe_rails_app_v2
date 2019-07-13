@@ -1,7 +1,7 @@
 <template>
   <div class="item-display__imgbox">
     <!-- <h1>ItemDisplayImage</h1> -->
-    <img class="item-display__img" :src="item.image.url">
+    <img class="item-display__img" :src="item.image">
     <!-- {{item}} -->
   </div>
 </template>

@@ -44,4 +44,7 @@ class ItemImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  def filename
+    original_filename if original_filename
+  end
 end

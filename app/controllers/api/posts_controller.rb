@@ -3,6 +3,13 @@ class Api::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @post_params = {
+      id: @post.id,
+      name: @post.name,
+      description: @post.description,
+      image: @post.image.url,
+    }
+
     @items = Item.where(post_id: @post.id).order(:sortrank)
 
     @items_params = @items.map {|item|
@@ -19,7 +26,7 @@ class Api::PostsController < ApplicationController
       when "ItemText" then
         item_default_params.merge({body: item.target.body})
       when "ItemImage" then
-        item_default_params.merge({image: item.target.image})
+        item_default_params.merge({image: item.target.image.url})
       end
     }
     
@@ -49,7 +56,8 @@ class Api::PostsController < ApplicationController
       params.require(:post).permit(
           :name,
           :description,
-          {image: :url},
+          # {image: :url},
+          :image,
           :status,
 
           items_attributes: [
@@ -60,7 +68,8 @@ class Api::PostsController < ApplicationController
             :target_id,  
             :title,
             :body,
-            {image: :url}
+            # {image: :url}
+            :image
           ]
         )
     end

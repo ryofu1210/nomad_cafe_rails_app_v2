@@ -3,6 +3,7 @@ FactoryBot.define do
     association :user
     name {"store name"}
     description {"説明説明説明説明説明説明説明説明説明説明説明説明"}
+    image {File.open("#{Rails.root}/spec/fixtures/images/store_image.jpg")}
     status {0}
     recommend_degree {1}
     wifi {1}

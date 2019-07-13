@@ -1,6 +1,10 @@
 <template>
   <div class="post-view">
-    <!-- <h1>PostEditView</h1> -->
+    
+    <!-- <img :src="post_params.image" > -->
+    <div class="container-header">
+      <PostEditHeader :post="post_params" />
+    </div>
     <div class="container-items">
       <ItemComponentList :items="items" />
     </div>
@@ -17,23 +21,25 @@
 
 <script>
 import ItemComponentList from './ItemComponentList';
+import PostEditHeader from './PostEditHeader';
 
 export default {
   name: 'PostEditView',
 
   components: {
-    ItemComponentList
+    ItemComponentList,
+    PostEditHeader
   },
 
   data: ()=> {
     return {
-      message: "Hello Vue! Post Edit View",
+      // message: "Hello Vue! Post Edit View",
       // id: this.$route.params.id,
 
     }
   },
 
-  mounted(){
+  created(){
     this.LoadItems()
   },
 
