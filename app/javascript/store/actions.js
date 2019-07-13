@@ -7,6 +7,7 @@ const actions = {
     // console.log(id)
     return client.get(`/api/posts/${id}.json`)
             .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
+            .catch(err => {throw err})
   },
 
   moveItemDown: ({commit},{sortrank, totalcount})=>{
@@ -46,11 +47,11 @@ const actions = {
   // },
 
 
-  update: ({commit},{id, post_params, items})=>{
+  update: ({commit},{id, post, items})=>{
     // console.log(id)
     // console.log("action")
     // console.log(post_params)
-    const ItemParams = new ItemParameter(post_params, items)
+    const ItemParams = new ItemParameter(post, items)
     const item_params = ItemParams.trim()
     // console.log("item_params")
     // console.log(item_params)

@@ -7,7 +7,7 @@
     </div>
     <div>
       <label>Description</label>
-      <textarea v-model="post.description" ></textarea>
+      <textarea v-model="datadesc" ></textarea>
     </div>
     <div class="header-image__box">
       <label>画像</label>
@@ -40,23 +40,29 @@ export default {
 
   data() {
     return{
-      dataname:this.post.name,
+      dataname: "",
       imagePath: this.post.image,
       imageName: '',
+      datadesc: "",
     }
   },
 
-  // mounted(){
-  //   this.loadImage(this.post.name)
-  // },
+  mounted(){
+    // this.loadImage(this.post.name)
+    this.$nextTick(()=>{
+      this.dataname = this.post.name
+    })
+  },
 
 
-  // computed: {
-  //   returnImage(){
-  //     this.imagePath = this.post.image
-  //     return this.imagePath
-  //   }
-  // },
+  computed: {
+    // returnImage(){
+    //   this.imagePath = this.post.image
+    //   this.dataname = this.post.name
+    //   this.datadesc = this.post.description
+    //   return this.imagePath
+    // }
+  },
 
   methods: {
     // loadImage(name){
@@ -65,8 +71,6 @@ export default {
     //   this.imagePath = this.post.image
     //   this.post.image = this.post.image
     // },
-
-
 
     handleUpdate(imagePath, sortrank){
       const newItem = {image:imagePath}
