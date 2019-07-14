@@ -32,6 +32,10 @@ export default {
       case "text":
         targetParams = {target_type:"ItemText", body: ""}
         break
+      case "image":
+          targetParams = {target_type:"ItemImage", image: ""}
+          break
+    
     }
     const item = _.merge(commonParams,targetParams)
     state.items.splice(totalcount,0,item)

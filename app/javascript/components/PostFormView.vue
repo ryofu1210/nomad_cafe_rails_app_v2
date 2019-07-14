@@ -23,8 +23,6 @@
       </div>
     </div>
 
-
-
     <!-- <input type="text" v-model="post.name" > -->
     <!-- <img :src="post_params.image" > -->
     <!-- <div class="container-header">
@@ -46,14 +44,14 @@
 
 <script>
 import ItemComponentList from './ItemComponentList';
-import PostEditHeader from './PostEditHeader';
+// import PostEditHeader from './PostEditHeader';
 
 export default {
-  name: 'PostEditView',
+  name: 'PostFormView',
 
   components: {
     ItemComponentList,
-    PostEditHeader
+    // PostEditHeader
   },
 
   data(){
@@ -99,21 +97,38 @@ export default {
     LoadItems(){
       this.setProgress("読み込み中...")
       const id = this.$route.params.id
-      this.$store.dispatch('fetchAllItems',{id})
-        .catch(err => {
-          Promise.reject(err)
-        })
-        .then(()=>{
-          this.post = this.$store.state.post
-          this.items = this.$store.state.items
-          this.resetProgress()
-        })
-        // this.setPostParams()
+      // console.log(id)
+      if(id){
+        this.$store.dispatch('fetchAllItems',{id})
+          .catch(err => {
+            Promise.reject(err)
+          })
+          .then(()=>{
+            this.post = this.$store.state.post
+            this.items = this.$store.state.items
+            this.resetProgress()
+          })
+          // this.setPostParams()
+      }else{
+        this.$store.dispatch('fetchNewItems')
+          .catch(err => {
+            Promise.reject(err)
+          })
+          .then(()=>{
+            this.post = this.$store.state.post
+            this.items = this.$store.state.items
+            this.resetProgress()
+          })
+      }
     },
 
     handleSubmit(post, items){
       const id = this.$route.params.id
-      this.$store.dispatch('update', {id, post, items})
+      if(id){
+        this.$store.dispatch('update', {id, post, items})
+      }else{
+        this.$store.dispatch('create', {post, items})
+      }
     },
 
 

@@ -1,4 +1,18 @@
-- @posts.each do |post|
-  = post.name
-  = link_to '編集', edit_back_post_path(post)
-  br
+= link_to '新規作成', new_back_post_path
+br
+table
+  thead
+    tr
+      th ID
+      th 店名
+      th 公開状況
+      th 編集
+      th 削除
+  tbody
+    - @posts.each do |post|
+      tr
+        td = post.id
+        td = post.name
+        td = post.status
+        td = link_to '編集', edit_back_post_path(post)
+        td = link_to '削除', back_post_path(post), method: :delete

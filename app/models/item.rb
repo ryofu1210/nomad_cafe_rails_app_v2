@@ -10,7 +10,7 @@
 #
 
 class Item < ApplicationRecord
-  belongs_to :post, touch: true
+  belongs_to :post, touch: true, inverse_of: :items
   belongs_to :target, polymorphic: true
 
   # enum target_type: {

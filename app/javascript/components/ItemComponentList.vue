@@ -4,6 +4,7 @@
     <!-- {{ items }} -->
     <button @click="handleAdd('heading', totalcount)">見出し追加</button>
     <button @click="handleAdd('text', totalcount)">本文追加</button>
+    <button @click="handleAdd('image', totalcount)">画像追加</button>
     <ul>
       <li v-for="(item, index) in items" :key="item.id">
         <ItemComponent :item="item" :sortrank="index" :totalcount="totalcount" />

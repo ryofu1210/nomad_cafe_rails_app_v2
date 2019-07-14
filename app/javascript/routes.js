@@ -1,13 +1,19 @@
 import VueRouter from 'vue-router';
 import AppPage from './app.vue';
-import PostEditView from './components/PostEditView.vue';
+import PostFormView from './components/PostFormView.vue';
 
 const routes = [
 {
   path: '/back/posts/:id/edit', 
-  component: PostEditView,
+  component: PostFormView,
   name: 'PostEditView'
 },
+{
+  path: '/back/posts/new', 
+  component: PostFormView,
+  name: 'PostNewView'
+},
+
 ]
 
 export default new VueRouter({ mode: 'history', routes });

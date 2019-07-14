@@ -29,7 +29,7 @@
 // import { setTimeout } from 'timers';
 
 export default {
-  name: 'PostEditHeader',
+  name: 'PostFormHeader',
 
   props: {
     post: {
