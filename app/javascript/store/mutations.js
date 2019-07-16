@@ -3,19 +3,14 @@ import _ from 'lodash';
 
 export default {
   [types.FETCH_ALL_ITEMS] (state, payload){
-    // console.log(payload)
-    // console.log(payload.items)
     const items = payload.items.map(item => {
-      // console.log(item)
       return _.merge( item , { isNew:false, editing:false } )
     })
-    // console.log("fetch all items")
-    // console.log(items)
     state.items = items
-    // console.log(state.items)
     state.post = payload.post
   },
- 
+  
+
   [types.ADD_ITEM] (state, payload) {
     const {type, totalcount} = payload
     const commonParams = {
@@ -59,9 +54,6 @@ export default {
 
   [types.DELETE_ITEM] (state, payload){
     const sortrank = payload
-    // console.log("delete item")
-    // console.log(sortrank)
-    // console.log(state.items)
     state.items.splice(sortrank, 1)
   },
 

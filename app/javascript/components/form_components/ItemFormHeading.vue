@@ -9,11 +9,15 @@
       >
     </div>
     <div>
+      <p>{{ message }}</p>
+    </div>
+    <div>
       <button 
         @click="handleUpdate(dataTitle, sortrank)"
       >
       閉じる
       </button>
+      <button @click="handleCansel(sortrank)">キャンセル</button>
       <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>
@@ -44,22 +48,29 @@ export default {
 
   data (){
     return{
-      dataTitle: this.title
+      dataTitle: this.title,
+      message: ''
     }
   },
 
   methods: {
     handleUpdate(title, sortrank){
+      if(title.length === 0){
+        this.message = '入力してください。'
+        return
+      }
       // this.$store.dispatch("updateItem",title)
       console.log(title)
       const newItem = {title:title}
       this.$store.dispatch('updateItem', {newItem:newItem,sortrank:sortrank})
       this.$emit("editing-event")
+
+      this.message = ''
     },
 
-    // editDataTitle(){
-    //   return this.title
-    // }
+    handleCansel(sortrank){
+      this.$store.dispatch('deleteItem',{sortrank})
+    }
   }
 }
 </script>

@@ -26,11 +26,15 @@
       </div>
     </div>
     <div>
+      <p>{{ message }}</p>
+    </div>
+    <div>
       <button 
         @click="handleUpdate(imagePath, sortrank)"
       >
       閉じる
       </button>
+      <button @click="handleCansel(sortrank)">キャンセル</button>
       <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>
@@ -62,15 +66,21 @@ export default {
   data (){
     return{
       imagePath: this.image,
-      imageName:''
+      imageName:'',
+      message: ''
     }
   },
 
   methods: {
     handleUpdate(imagePath, sortrank){
+      if(imagePath.length === 0){
+        this.message = '画像を選択してください。'
+        return
+      }
       const newItem = {image:imagePath}
       this.$store.dispatch('updateItem', {newItem:newItem,sortrank:sortrank})
       this.$emit("editing-event")
+      this.message = ''
       // console.log(this.$store.state.items)
     },
 
@@ -89,6 +99,10 @@ export default {
       };
       reader.readAsDataURL(file)
       // console.log(this.imagePath)
+    },
+
+    handleCansel(sortrank){
+      this.$store.dispatch('deleteItem',{sortrank})
     }
   }
 }

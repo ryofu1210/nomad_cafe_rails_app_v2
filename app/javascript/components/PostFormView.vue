@@ -5,10 +5,12 @@
     <div>
       <label>Name</label>
       <input type="text" v-model="post.name" >
+      <p>{{name_message}}</p>
     </div>
     <div>
       <label>Description</label>
       <textarea v-model="post.description" ></textarea>
+      <p>{{description_message}}</p>
     </div>
     <div class="header-image__box">
       <label>画像</label>
@@ -38,7 +40,11 @@
       >
       保存
       </button>
+      <router-link :to="{ name: 'PostPreviewModal'}">
+        <h3>プレビュー</h3>
+      </router-link>
     </div>
+  <router-view />
   </div>
 </template>
 
@@ -62,6 +68,8 @@ export default {
       // datapostparams: this.post_params
       post: {},
       items: [],
+      name_message: '',
+      description_message: '',
     }
   },
 
@@ -123,6 +131,7 @@ export default {
     },
 
     handleSubmit(post, items){
+      this.canSave()
       const id = this.$route.params.id
       if(id){
         this.$store.dispatch('update', {id, post, items})
@@ -131,7 +140,22 @@ export default {
       }
     },
 
-
+    canSave(){
+      let error_count = 0
+      if(this.post.name.length == 0){
+        this.name_message = '店名は必ず入力してください。'
+        error_count += 1
+      }
+      if(this.post.description.length == 0){
+        this.description_message = '説明文は必ず入力してください。'
+        error_count += 1
+      }
+      if(error_count > 0){
+        return
+      }
+      this.name_message = ''
+      this.description_message = ''
+    },
 
     handleUpdate(imagePath, sortrank){
       const newItem = {image:imagePath}

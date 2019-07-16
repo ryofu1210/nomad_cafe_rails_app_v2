@@ -1,18 +1,55 @@
 = link_to '新規作成', new_back_post_path
+
+.form
+  = form_with scope: :post, url: back_posts_path, method: :get, local: true do |f|
+    .form-group
+      = f.label :id
+      = f.text_field :id, value: @search_params[:id]
+    .form-group
+      = f.label :name, "店名"
+      = f.text_field :name, value: @search_params[:name]
+    .form-group
+      = f.label :user_name, "投稿者名"
+      = f.text_field :user_name, value: @search_params[:user_name]
+    .form-group
+      / = hidden_field_tag 'post[status_ids][]', nil
+      - Post.statuses.each do |key, value|
+        = f.check_box 'status_ids', {multiple: true, checked: @search_params[:status_ids].try(:include?,value.to_s) }, value, false
+        = f.label "status_ids_#{value}", "#{I18n.t("posts.statuses.#{key}")}"
+    .form-group
+      = "更新日"
+      = f.date_field :from, value: @search_params[:from]
+      = "〜"
+      = f.date_field :to, value: @search_params[:to]
+    .form-group
+      = f.button "検索"
+      = f.button "リセット", type: :reset
 br
 table
   thead
     tr
+      th 
+        公開状況
+        = order_link("back_posts_path", "status_order", "desc")
+        br
+        = order_link("back_posts_path", "status_order", "asc")
       th ID
       th 店名
-      th 公開状況
+      th 投稿者
+      th 
+        更新日時
+        = order_link("back_posts_path", "updated_at_order", "desc")
+        br
+        = order_link("back_posts_path", "updated_at_order", "asc")
       th 編集
       th 削除
   tbody
     - @posts.each do |post|
       tr
+        td = post.status_i18n
         td = post.id
         td = post.name
-        td = post.status
+        td = post.user.nickname
+        td = simple_time(post.updated_at)
         td = link_to '編集', edit_back_post_path(post)
-        td = link_to '削除', back_post_path(post), method: :delete
+        td = link_to '削除', back_post_path(post), method: :delete, data: { confirm: "Are you sure?" }

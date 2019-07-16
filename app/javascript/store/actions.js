@@ -45,6 +45,7 @@ const actions = {
     return commit(types.UPDATE_ITEM, {newItem, sortrank})
   },
 
+
   // changeEditing: ({commit},{sortrank})=>{
   //   // console.log("action")
   //   // console.log(value)
