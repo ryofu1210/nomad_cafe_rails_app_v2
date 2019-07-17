@@ -20,12 +20,14 @@
 
 class Post < ApplicationRecord
   include DataURIToImageConverter
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :area
 
   belongs_to :user
   belongs_to :area
   has_many :favorites
-  has_many :favorited_users, source: :user, throuth: :favorites
-  belongs_to :area
+  has_many :favorited_users, source: :user, through: :favorites
+  has_one :featured_post
   has_many :items, -> { order('sortrank asc') }, dependent: :destroy, inverse_of: :post
 
   accepts_nested_attributes_for :items, reject_if: ->(attributes) { attributes['target_type'].blank? }

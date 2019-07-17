@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_132739) do
-
-  create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "title"
-  end
+ActiveRecord::Schema.define(version: 2019_07_16_141244) do
 
   create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -23,6 +19,12 @@ ActiveRecord::Schema.define(version: 2019_07_16_132739) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_favorites_on_post_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "featured_posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "post_id"
+    t.integer "sortrank", null: false
+    t.index ["post_id"], name: "index_featured_posts_on_post_id"
   end
 
   create_table "item_headings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -59,8 +61,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_132739) do
     t.integer "longstay_degree", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "area_id"
-    t.index ["area_id"], name: "index_posts_on_area_id"
+    t.integer "area_id", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -94,7 +95,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_132739) do
 
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
+  add_foreign_key "featured_posts", "posts"
   add_foreign_key "items", "posts"
-  add_foreign_key "posts", "areas"
   add_foreign_key "posts", "users"
 end

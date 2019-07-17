@@ -45,6 +45,7 @@ gem 'kaminari'
 gem 'enum_help'
 gem 'rails-i18n', '~> 5.1'
 gem 'webpacker', github: 'rails/webpacker'
+gem 'active_hash'
 
 
 # Reduces boot times through caching; required in config/boot.rb

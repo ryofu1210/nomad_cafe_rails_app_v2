@@ -10,5 +10,6 @@ FactoryBot.define do
     wifi_detail {"Wi2/Wi2_club"}
     outret {1}
     longstay_degree {1}
+    area_id {1}
   end
 end
