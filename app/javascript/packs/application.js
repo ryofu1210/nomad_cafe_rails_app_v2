@@ -20,7 +20,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import App from '../app';
-import PostEditView from '../components/PostEditView';
+import PostFormView from '../components/PostFormView';
 
 import router from '../routes';
 import store from '../store';

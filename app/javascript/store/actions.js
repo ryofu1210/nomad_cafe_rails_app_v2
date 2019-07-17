@@ -4,10 +4,17 @@ import ItemParameter from '../util';
 
 const actions = {
   fetchAllItems: ({commit},{id})=>{
-    // console.log(id)
-    return client.get(`/api/posts/${id}.json`)
+    return client.get(`/api/posts/${id}/edit.json`)
             .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
+            .catch(err => {throw err})
   },
+
+  fetchNewItems: ({commit})=>{
+    return client.get(`/api/posts/new.json`)
+            .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
+            .catch(err => {throw err})
+  },
+  
 
   moveItemDown: ({commit},{sortrank, totalcount})=>{
     if (sortrank >= totalcount){
@@ -38,6 +45,7 @@ const actions = {
     return commit(types.UPDATE_ITEM, {newItem, sortrank})
   },
 
+
   // changeEditing: ({commit},{sortrank})=>{
   //   // console.log("action")
   //   // console.log(value)
@@ -46,15 +54,17 @@ const actions = {
   // },
 
 
-  update: ({commit},{id, post_params, items})=>{
-    // console.log(id)
-    // console.log("action")
-    // console.log(post_params)
-    const ItemParams = new ItemParameter(post_params, items)
+  update: ({commit},{id, post, items})=>{
+    const ItemParams = new ItemParameter(post, items)
     const item_params = ItemParams.trim()
-    // console.log("item_params")
-    // console.log(item_params)
     return client.patch(`/api/posts/${id}.json`, {post: item_params})
+            // .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
+  },
+
+  create: ({commit},{post, items})=>{
+    const ItemParams = new ItemParameter(post, items)
+    const item_params = ItemParams.trim()
+    return client.post(`/api/posts.json`, {post: item_params})
             // .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
   },
 

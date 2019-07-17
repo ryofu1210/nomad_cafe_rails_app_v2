@@ -47,9 +47,13 @@ bower.json
 # Ignore node_modules
 node_modules/
 
+# webpacker
 /public/packs
 /public/packs-test
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# custom
+public/uploads

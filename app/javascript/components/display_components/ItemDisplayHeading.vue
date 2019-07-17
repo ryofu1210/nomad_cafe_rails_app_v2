@@ -2,6 +2,7 @@
   <div>
     <!-- <h1>ItemDisplayHeading</h1> -->
     <h2 class="heading">{{ item.title }}</h2>
+    <!-- {{datatitle}} -->
   </div>
 </template>
 
@@ -15,6 +16,11 @@ export default {
     }
   },
 
+  // data(){
+  //   return{
+  //     datatitle: this.item.title
+  //   }
+  // }
 
 }
 </script>

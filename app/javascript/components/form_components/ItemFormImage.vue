@@ -1,7 +1,7 @@
 <template>
   <div class="item-form">
     <p class="item-form__header">イメージ</p>
-    <div class="item-form__content">
+    <!-- <div class="item-form__content">
       <div class="item-form__content-imgbox">
         <img class="item-form__content-img" :src="image.url">
         <p>{{dataImage.url}}</p>
@@ -10,13 +10,31 @@
         type="file" 
         class="item-form__file"
       >
+    </div> -->
+    <div class="item-form__content-imgbox">
+      <label>画像</label>
+      <input type="file" @change="handleUploadFile">
+      <div class="preview-item">
+        <p class="preview-item-name">{{ imageName }}</p>
+        <img
+          v-show="imagePath"
+          class="item-form__content-img"
+          :src="imagePath"
+          alt=""
+        />
+        {{imagePath}}
+      </div>
+    </div>
+    <div>
+      <p>{{ message }}</p>
     </div>
     <div>
       <button 
-        @click="handleUpdate(dataImage, sortrank)"
+        @click="handleUpdate(imagePath, sortrank)"
       >
       閉じる
       </button>
+      <button @click="handleCansel(sortrank)">キャンセル</button>
       <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>
@@ -31,7 +49,7 @@ export default {
     //   type:Object
     // }
     image: {
-      type:Object
+      type:String
     },
 
     sortrank: {
@@ -47,18 +65,45 @@ export default {
 
   data (){
     return{
-      dataImage: this.image
+      imagePath: this.image,
+      imageName:'',
+      message: ''
     }
   },
 
   methods: {
-    handleUpdate(dataImage, sortrank){
-      // this.$store.dispatch("updateItem",title)
-      console.log(dataImage)
-      const newItem = {image:dataImage}
+    handleUpdate(imagePath, sortrank){
+      if(imagePath.length === 0){
+        this.message = '画像を選択してください。'
+        return
+      }
+      const newItem = {image:imagePath}
       this.$store.dispatch('updateItem', {newItem:newItem,sortrank:sortrank})
       this.$emit("editing-event")
+      this.message = ''
+      // console.log(this.$store.state.items)
     },
+
+    handleUploadFile(e){
+      // console.log(e)
+      const files = e.target.files || e.dataTransfer.files;
+      this.createImage(files[0])
+      this.imageName = files[0].name
+    },
+
+    createImage(file){
+      const reader = new FileReader();
+      reader.onload = e => {
+        // console.log(e)
+        this.imagePath = e.target.result;
+      };
+      reader.readAsDataURL(file)
+      // console.log(this.imagePath)
+    },
+
+    handleCansel(sortrank){
+      this.$store.dispatch('deleteItem',{sortrank})
+    }
   }
 }
 </script>

@@ -1,0 +1,12 @@
+ja:
+  posts:
+    statuses:
+      editing: 下書き
+      accepted: 公開
+      deleted: 削除済み
+  enums:
+    post:
+      status:
+        editing: 下書き
+        accepted: 公開中
+        deleted: 削除済

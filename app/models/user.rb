@@ -36,5 +36,8 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
   has_many :posts, dependent: :destroy
+  has_many :favorites
+  has_many :favorite_posts, source: :post, through: :favorites
 
+  enum role: {user: 0, admin: 1}
 end
