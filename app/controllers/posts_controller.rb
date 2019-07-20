@@ -5,11 +5,15 @@ class PostsController < ApplicationController
 
   
   def index
-    @search_params = params.slice(:word)
+    # byebug
+    @search_params = params.fetch(:post,{})
+                            .permit(:word, {tag_ids:[]} )
     @areas = Area.all
     @featured_posts = FeaturedPost.order(:sortrank).limit(6).map(&:post)
     @posts = Post.user_search(@search_params).limit(5)
     @popular_posts = Post.popular_posts
+    @tags = Tag.all
+    @selected_tags = Tag.where(id: @search_params[:tag_ids])
   end
 
   def show

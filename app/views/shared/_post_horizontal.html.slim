@@ -1,0 +1,26 @@
+.card-horizontal
+  .card-img
+    - if post.image.url.present?
+      = image_tag post.image.url, {class:"card-img__content"}
+    - else
+      img src="/assets/default_image_post.png" class="card-img__content"
+  .card-body
+    .card-body__title
+      = post.name
+    span.card-body__area
+      = post.area.name
+    .card-body__description
+      = post.description
+    .card-body__tags
+      - post.tags.each do |tag|
+        .card-body__tag
+          = tag.name
+    div
+      span お気に入り数
+      span= post.favorites.count
+    / - if current_user == post.user
+    /   = link_to '編集', edit_post_path(post)
+    /   = link_to '削除', post_path(post), method: :delete
+    div
+      span PV数
+      span= post.impressionist_count

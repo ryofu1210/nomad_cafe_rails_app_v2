@@ -1,12 +1,10 @@
 # == Schema Information
 #
-# Table name: items
+# Table name: featured_posts
 #
-#  id          :bigint           not null, primary key
-#  post_id     :bigint
-#  sortrank    :integer          not null
-#  target_type :string(255)
-#  target_id   :bigint
+#  id       :bigint           not null, primary key
+#  post_id  :bigint
+#  sortrank :integer          not null
 #
 
 class FeaturedPost < ApplicationRecord

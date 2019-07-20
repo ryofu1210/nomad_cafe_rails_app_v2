@@ -15,13 +15,13 @@
 #  longstay_degree  :integer          default(0), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  area_id          :bigint
+#  area_id          :integer          not null
 #
 
 class Post < ApplicationRecord
   include DataURIToImageConverter
   is_impressionable
-  
+
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :area
 
@@ -31,6 +31,8 @@ class Post < ApplicationRecord
   has_many :favorited_users, source: :user, through: :favorites
   has_one :featured_post
   has_many :items, -> { order('sortrank asc') }, dependent: :destroy, inverse_of: :post
+  has_many :post_tags
+  has_many :tags, through: :post_tags
 
   accepts_nested_attributes_for :items, reject_if: ->(attributes) { attributes['target_type'].blank? }
   mount_uploader :image, PostImageUploader
