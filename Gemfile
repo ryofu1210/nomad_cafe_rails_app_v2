@@ -46,7 +46,8 @@ gem 'enum_help'
 gem 'rails-i18n', '~> 5.1'
 gem 'webpacker', github: 'rails/webpacker'
 gem 'active_hash'
-
+gem 'redis-rails'
+gem 'impressionist'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

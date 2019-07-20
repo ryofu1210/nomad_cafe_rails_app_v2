@@ -1,0 +1,18 @@
+h1 post index
+= form_with url: posts_path, method: :get, local: true do |f|
+  = f.text_field :word, value: @search_params[:word], class:"form-control"
+  = f.button "検索", class:"btn btn-secondary"
+
+h2 エリア一覧
+- @areas.each do |area|
+  = link_to area.name, area_path(area)
+  br
+
+h2 一覧
+= render partial: 'shared/post', collection: @posts, as: :post
+br
+
+h2 急上昇ランキング
+- @popular_posts.each do |post|
+  = link_to post.name, post_path(post)
+  br

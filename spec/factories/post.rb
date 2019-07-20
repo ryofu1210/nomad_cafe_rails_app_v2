@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :post do
     association :user
-    name {"store name"}
+    sequence(:name) {|n| "STORE NAME#{n}"}
     description {"説明説明説明説明説明説明説明説明説明説明説明説明"}
     image {File.open("#{Rails.root}/spec/fixtures/images/store_image.jpg")}
     status {0}

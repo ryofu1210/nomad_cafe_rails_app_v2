@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
+  # root 'posts#index'
+  resources :posts, only: %w(index show)
+  resources :areas, only: %w(show)
+
   namespace :back do
     resources :posts, only: %w(index show new edit destroy)
   end
