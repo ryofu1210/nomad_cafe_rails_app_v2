@@ -52,7 +52,7 @@ class Post < ApplicationRecord
     return where("updated_at <= ?",to) unless from
     where(updated_at: from..to)
   }
-  scope :by_name_and_description, -> (word = nil) { where('name LIKE ? OR description LIKE ?',"%#{word}%","%#{word}%") if word.present?}
+  scope :by_name_and_description, -> (word = nil) { where('posts.name LIKE ? OR description LIKE ?',"%#{word}%","%#{word}%") if word.present?}
 
   scope :order_by, lambda { |status_order: nil, updated_at_order: nil|
     return unless status_order || updated_at_order
@@ -61,6 +61,11 @@ class Post < ApplicationRecord
     order([status_sql, updated_at_sql].compact.join(','))
   }
   # scope :exclude_deleted, -> { where.not(status: 4) }
+  scope :by_tag_ids, lambda { |tag_ids = nil|
+    return unless tag_ids
+    includes(:tags).references(:tags).where(tags: {id: tag_ids} )
+  }
+
   scope :active, -> { where(status: 1) }
   scope :order_updated_at, -> { order(updated_at: :desc) }
 
@@ -77,6 +82,7 @@ class Post < ApplicationRecord
 
   scope :user_search, lambda { |search_params ={}| 
     by_name_and_description(search_params[:word])
+      .by_tag_ids(search_params[:tag_ids])
   }
 
 

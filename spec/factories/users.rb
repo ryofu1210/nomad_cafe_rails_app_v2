@@ -36,5 +36,6 @@ FactoryBot.define do
     password {"password"}
     password_confirmation {"password"}
     role {1}
+    confirmed_at {Time.now}
   end
 end

@@ -5,7 +5,7 @@
   ul.header-nav
     - if user_signed_in?
       li.header-nav__item
-        = link_to 'マイページ', user_path(current_user)
+        = link_to '管理画面', back_posts_path
       li.header-nav__item
         = link_to 'ログアウト', destroy_user_session_path
     - else

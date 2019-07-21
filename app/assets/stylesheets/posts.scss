@@ -120,6 +120,37 @@
       border: 1px solid #00a680;
       border-radius: 5px;
     }
+
+    .card-body__sideinfo{
+      display:flex;
+
+      .card-body__favo{
+        .card-body__favo_icon{
+          .favo{
+            color:red;
+          }
+
+          .not_favo{
+            color: black;
+          }
+        }
+
+        .card-body__favo_count{
+          margin-left:5px;
+        }
+      }
+
+      .card-body__pv{
+        margin-left:20px;
+        .card-body__pv_icon{
+
+        }
+        .card-body__pv_count{
+          margin-left:5px;
+        }
+
+      }
+    }
   }
 }
 
