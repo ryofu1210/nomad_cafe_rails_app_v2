@@ -58,13 +58,16 @@
           = f.button "検索"
 
     .layout-content
-      .sort
-        .sort-title 並べ替え順:
-        ul.sort-list
-          li.sort-item.active お気に入り数
-          li.sort-item 新しい投稿
-          li.sort-item 急上昇PV
+      / .sort
+      /   .sort-title 並べ替え順:
+      /   ul.sort-list
+      /     li.sort-item.active 
+      /       = link_to "お気に入り数", posts_path, {remote: true} 
+      /     li.sort-item
+      /       = link_to "更新が新しい順", posts_path, {remote: true} 
+      /     li.sort-item 急上昇PV
       .card-list-horizontal
         = render partial: 'shared/post_horizontal', collection: @posts, as: :post
+        = paginate @posts
 
 

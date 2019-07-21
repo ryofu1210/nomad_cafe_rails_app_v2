@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     resources :favorites, only: %w(create destroy)
     # , as:'area_index'
   end
-  get '/areas/:id', to: "posts#area_index", as: 'area'
+  get '/posts/sort', to: 'posts#sort', as: 'sort'
+  get '/areas/:id', to: 'posts#area_index', as: 'area'
   # resources :areas, only: %w(show)
 
   namespace :back do
