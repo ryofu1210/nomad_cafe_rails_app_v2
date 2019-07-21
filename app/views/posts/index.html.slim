@@ -3,14 +3,25 @@
 /   $(document).ready(function() {
 /     $("p").text("jQuery稼働テスト(稼働中)");
 /   });
+- unless @area
+  - add_breadcrumb "Home", root_path
+  - add_breadcrumb "すべて"
+- else
+  - add_breadcrumb "Home", root_path
+  - add_breadcrumb "すべて", posts_path
+  - add_breadcrumb "#{@area.name}"
+
 
 .container
   .layout-header
     .header-box
-      h1.header-title タイトルタイトル
+      .header-breadcrumb
+        = render_breadcrumbs separator: ' > ' 
+      h1.header-title
+        = title_in_body(@area)
 
       .header-form
-        = form_with scope: :post, url: posts_path, method: :get, local: true do |f|
+        = form_with scope: :post, url: @current_path, method: :get, local: true do |f|
           - if @search_params[:tag_ids]
             - @search_params[:tag_ids].each do |tag_id|
               = f.hidden_field :tag_ids, multiple: true, value: tag_id
@@ -21,23 +32,24 @@
         / - @areas.each do |area|
         /   = link_to area.name, area_path(area)
         /   br
-        = form_with scope: :post, url: posts_path, method: :get, local: true do |f|
+        = form_with scope: :post, url: @current_path, method: :get, local: true do |f|
           = f.hidden_field :word, value: @search_params[:word]
           = f.hidden_field :tag_ids, value: @search_params[:tag_ids]
           = f.collection_select :area, @areas, :id, :name, {prompt: "エリア選択"}
   .layout-body
     .layout-nav
       .nav
-        h2.nav-title 選択中の条件
-        .nav-selected__tags
-          - if @search_params[:word].present?
-            .nav-selected__tag 
-              = "任意キーワード\"#{@search_params[:word]}\""
-          - @selected_tags.each do |selected_tag|
-            .nav-selected__tag
-              = selected_tag.name
+        - if @search_params[:word] || @selected_tags.present?
+          h2.nav-title 選択中の条件
+          .nav-selected__tags
+            - if @search_params[:word].present?
+              .nav-selected__tag 
+                = "任意キーワード\"#{@search_params[:word]}\""
+            - @selected_tags.each do |selected_tag|
+              .nav-selected__tag
+                = selected_tag.name
         h2.nav-title 検索条件
-        = form_with scope: :post, url: posts_path, method: :get, local: true do |f|
+        = form_with scope: :post, url: @current_path, method: :get, local: true do |f|
           = f.hidden_field :word, value: @search_params[:word]
           - @tags.each do |tag|
             .nav-form__checkbox

@@ -50,6 +50,8 @@ gem 'redis-rails'
 gem 'impressionist'
 gem 'jquery-rails'
 gem 'font-awesome-rails'
+gem 'breadcrumbs_on_rails'        # パンくず
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

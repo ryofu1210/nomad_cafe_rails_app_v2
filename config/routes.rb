@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   # root 'posts#index'
   resources :posts, only: %w(index show) do
     resources :favorites, only: %w(create destroy)
+    # , as:'area_index'
   end
-
-  resources :areas, only: %w(show)
+  get '/areas/:id', to: "posts#area_index", as: 'area'
+  # resources :areas, only: %w(show)
 
   namespace :back do
     resources :posts, only: %w(index show new edit destroy)
