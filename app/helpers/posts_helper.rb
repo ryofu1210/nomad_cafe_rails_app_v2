@@ -5,4 +5,8 @@ module PostsHelper
       content_tag(:span, icon)
     end
   end
+
+  def title_in_body(area)
+    return area.present? ? "#{area.name}のカフェ一覧" : "カフェ一覧"
+  end
 end

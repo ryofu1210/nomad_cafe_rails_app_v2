@@ -53,3 +53,4 @@ table
         td = simple_time(post.updated_at)
         td = link_to '編集', edit_back_post_path(post)
         td = link_to '削除', back_post_path(post), method: :delete, data: { confirm: "Are you sure?" }
+= paginate @posts
