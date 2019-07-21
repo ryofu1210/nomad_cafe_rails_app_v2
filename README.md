@@ -1,24 +1,13 @@
-# README
+# nomad_cafe_rails_app
+PC作業が捗る、おすすめカフェがわかるアプリ
+「東京ノマドカフェ」ver2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 使用技術
+- フレームワーク：Rails(5.2) / Vue.js
+- コンテンツ配信：AWS S3
+- 本番環境：AWS EC2 / AWS RDS
+- CI/CD：CircleCI
+- データベース：MySQL、Redis
+- プロジェクト管理：github
+- SMTPサーバ：SendGrid
+- テストフレームワーク：Rspec

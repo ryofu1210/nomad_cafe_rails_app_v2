@@ -25,7 +25,7 @@
 #  nickname               :string(255)      default(""), not null
 #  profile                :text(65535)
 #  avatar                 :string(255)
-#  role                   :integer          default(0), not null
+#  role                   :integer          default("user"), not null
 #
 
 FactoryBot.define do
@@ -36,5 +36,6 @@ FactoryBot.define do
     password {"password"}
     password_confirmation {"password"}
     role {1}
+    confirmed_at {Time.now}
   end
 end

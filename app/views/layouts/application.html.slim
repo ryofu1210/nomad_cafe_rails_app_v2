@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title
+      | NomadCafeRailsAppV2
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    - #= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = yield(:javascript_pack_tag)
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    = render 'layouts/header'
+    - if notice || alert
+      .container-fuild.flash.time-limit.fixed-top
+        - if notice
+          .bg-success.notice
+            = flash[:notice]
+        - elsif alert
+          .bg-success.alert
+            = flash[:alert]
+    = yield

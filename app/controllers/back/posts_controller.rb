@@ -46,7 +46,7 @@ class Back::PostsController < ApplicationController
     else
       session[:search_params] = search_params
     end
-    return session[:search_params].reject {|k,v| v.blank?}.symbolize_keys
+    return session[:search_params].reject {|k,v| v.blank?}.try(:symbolize_keys).presence || {}
     # logger.debug(session[:search_params])
     # return session[:search_params]
   end

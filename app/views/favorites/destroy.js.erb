@@ -1,0 +1,2 @@
+$("#post-<%= @favorite.post_id %> .card-body__favo_icon").html("<%= j (render partial:'shared/not_favorite', locals: {post_id: @favorite.post_id}) %>");
+$("#post-<%= @favorite.post_id %> .card-body__favo_count").html("<%= @favorite.post.favorites.count %>");

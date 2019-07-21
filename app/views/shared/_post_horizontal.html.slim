@@ -1,0 +1,34 @@
+.card-horizontal[id="post-#{post.id}"]
+  .card-img
+    - if post.image.url.present?
+      = image_tag post.image.url, {class:"card-img__content"}
+    - else
+      img src="/assets/default_image_post.png" class="card-img__content"
+  .card-body
+    .card-body__title
+      = post.name
+    span.card-body__area
+      = post.area.name
+    .card-body__description
+      = post.description
+    .card-body__tags
+      - post.tags.each do |tag|
+        .card-body__tag
+          = tag.name
+    .card-body__sideinfo
+      .card-body__favo
+        span.card-body__favo_icon
+          - if current_user && current_user.already_favorite?(post.id)
+            = render partial: 'shared/favorite', locals: {post_id: post.id, user_id: current_user.id}
+          - else
+            = render partial: 'shared/not_favorite', locals: {post_id: post.id}
+        span.card-body__favo_count
+          = post.favorites.count
+      / - if current_user == post.user
+      /   = link_to '編集', edit_post_path(post)
+      /   = link_to '削除', post_path(post), method: :delete
+      .card-body__pv
+        span.card-body__pv_icon
+          = fa_icon "eye"
+        span.card-body__pv_count
+          = post.impressionist_count

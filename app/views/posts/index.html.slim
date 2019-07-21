@@ -1,0 +1,58 @@
+/ p jQuery稼働テスト(未稼働)
+/ javascript:
+/   $(document).ready(function() {
+/     $("p").text("jQuery稼働テスト(稼働中)");
+/   });
+
+.container
+  .layout-header
+    .header-box
+      h1.header-title タイトルタイトル
+
+      .header-form
+        = form_with scope: :post, url: posts_path, method: :get, local: true do |f|
+          - if @search_params[:tag_ids]
+            - @search_params[:tag_ids].each do |tag_id|
+              = f.hidden_field :tag_ids, multiple: true, value: tag_id
+          = f.text_field :word, value: @search_params[:word], class:"form-control"
+          = f.button "検索", class:"btn btn-secondary"
+
+        / h2 エリア一覧
+        / - @areas.each do |area|
+        /   = link_to area.name, area_path(area)
+        /   br
+        = form_with scope: :post, url: posts_path, method: :get, local: true do |f|
+          = f.hidden_field :word, value: @search_params[:word]
+          = f.hidden_field :tag_ids, value: @search_params[:tag_ids]
+          = f.collection_select :area, @areas, :id, :name, {prompt: "エリア選択"}
+  .layout-body
+    .layout-nav
+      .nav
+        h2.nav-title 選択中の条件
+        .nav-selected__tags
+          - if @search_params[:word].present?
+            .nav-selected__tag 
+              = "任意キーワード\"#{@search_params[:word]}\""
+          - @selected_tags.each do |selected_tag|
+            .nav-selected__tag
+              = selected_tag.name
+        h2.nav-title 検索条件
+        = form_with scope: :post, url: posts_path, method: :get, local: true do |f|
+          = f.hidden_field :word, value: @search_params[:word]
+          - @tags.each do |tag|
+            .nav-form__checkbox
+              = f.check_box 'tag_ids', {multiple: true, checked: @search_params[:tag_ids].try(:include?, tag.id.to_s) }, tag.id, false
+              = f.label "tag_ids_#{tag.id}", tag.name
+          = f.button "検索"
+
+    .layout-content
+      .sort
+        .sort-title 並べ替え順:
+        ul.sort-list
+          li.sort-item.active お気に入り数
+          li.sort-item 新しい投稿
+          li.sort-item 急上昇PV
+      .card-list-horizontal
+        = render partial: 'shared/post_horizontal', collection: @posts, as: :post
+
+

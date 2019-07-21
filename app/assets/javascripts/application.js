@@ -13,4 +13,15 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery
+//= require jquery_ujs
 //= require_tree .
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  const element = document.querySelector("#post_area");
+  element.addEventListener("change", ()=>{
+    const value = element.value;
+    const log = `選択されているのは${value}です`;
+    alert(`${log}`);
+  })
+})

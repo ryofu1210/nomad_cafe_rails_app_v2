@@ -1,0 +1,15 @@
+h1= @area.name
+p Find me in app/views/areas/show.html.slim
+= form_with url: area_path(@area), method: :get, local: true do |f|
+  = f.text_field :word, value: @search_params[:word], class:"form-control"
+  = f.button "検索", class:"btn btn-secondary"
+
+h2="#{@area.name}の一覧"
+- @posts.each do |post|
+  = link_to post.name, post_path(post)
+  br/
+
+h2 エリア別急上昇ストア
+- @popular_posts.each do |post|
+  = link_to post.name, post_path(post)
+  br

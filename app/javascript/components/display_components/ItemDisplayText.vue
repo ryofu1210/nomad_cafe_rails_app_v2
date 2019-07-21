@@ -20,6 +20,7 @@ export default {
 
 <style scoped>
 .text{
-  fonts-size:15px;
+  font-size:15px;
+
 }
 </style>

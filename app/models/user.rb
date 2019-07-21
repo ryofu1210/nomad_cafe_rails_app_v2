@@ -25,7 +25,7 @@
 #  nickname               :string(255)      default(""), not null
 #  profile                :text(65535)
 #  avatar                 :string(255)
-#  role                   :integer          default(0), not null
+#  role                   :integer          default("user"), not null
 #
 
 class User < ApplicationRecord
@@ -40,4 +40,8 @@ class User < ApplicationRecord
   has_many :favorite_posts, source: :post, through: :favorites
 
   enum role: {user: 0, admin: 1}
+
+  def already_favorite?(post_id)
+    self.favorites.exists?(post_id: post_id)
+  end
 end

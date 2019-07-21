@@ -15,11 +15,13 @@
 #  longstay_degree  :integer          default(0), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  area_id          :bigint
+#  area_id          :integer          not null
 #
 
 class Post < ApplicationRecord
   include DataURIToImageConverter
+  is_impressionable
+
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :area
 
@@ -29,6 +31,8 @@ class Post < ApplicationRecord
   has_many :favorited_users, source: :user, through: :favorites
   has_one :featured_post
   has_many :items, -> { order('sortrank asc') }, dependent: :destroy, inverse_of: :post
+  has_many :post_tags
+  has_many :tags, through: :post_tags
 
   accepts_nested_attributes_for :items, reject_if: ->(attributes) { attributes['target_type'].blank? }
   mount_uploader :image, PostImageUploader
@@ -48,6 +52,8 @@ class Post < ApplicationRecord
     return where("updated_at <= ?",to) unless from
     where(updated_at: from..to)
   }
+  scope :by_name_and_description, -> (word = nil) { where('posts.name LIKE ? OR description LIKE ?',"%#{word}%","%#{word}%") if word.present?}
+
   scope :order_by, lambda { |status_order: nil, updated_at_order: nil|
     return unless status_order || updated_at_order
     status_sql       = status_order ?  "status #{status_order}" : nil
@@ -55,6 +61,13 @@ class Post < ApplicationRecord
     order([status_sql, updated_at_sql].compact.join(','))
   }
   # scope :exclude_deleted, -> { where.not(status: 4) }
+  scope :by_tag_ids, lambda { |tag_ids = nil|
+    return unless tag_ids
+    includes(:tags).references(:tags).where(tags: {id: tag_ids} )
+  }
+
+  scope :active, -> { where(status: 1) }
+  scope :order_updated_at, -> { order(updated_at: :desc) }
 
   scope :back_search, lambda { |search_params = {}|
     # byebug
@@ -65,6 +78,11 @@ class Post < ApplicationRecord
     .updated_at_between(from: search_params[:from],to: search_params[:to])
     .order_by(status_order: search_params[:status_order], updated_at_order: search_params[:updated_at_order])
     # byebug
+  }
+
+  scope :user_search, lambda { |search_params ={}| 
+    by_name_and_description(search_params[:word])
+      .by_tag_ids(search_params[:tag_ids])
   }
 
 
@@ -107,4 +125,20 @@ class Post < ApplicationRecord
       logger.error "error: #{e.message}, location: #{e.backtrace_locations}"
       false  
   end
+
+
+  def self.popular_posts
+    post_ids = RedisService.get_daily_post_ranking(Time.zone.today)
+    return Post.where(id: post_ids)
+                .order(['field(id, ?)',post_ids])
+                .limit(6)
+  end
+
+  def self.popular_area_posts(area_id)
+    post_ids = RedisService.get_daily_area_post_ranking(Time.zone.today, area_id)
+    return Post.where(id: post_ids)
+                .order(['field(id, ?)',post_ids])
+                .limit(6)
+  end
+
 end
