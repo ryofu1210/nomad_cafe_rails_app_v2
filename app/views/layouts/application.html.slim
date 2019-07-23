@@ -12,11 +12,12 @@ html
   body
     = render 'layouts/header'
     - if notice || alert
-      .container-fuild.flash.time-limit.fixed-top
+      .flash
         - if notice
-          .bg-success.notice
+          .flash-message.flash-message__notice
             = flash[:notice]
         - elsif alert
-          .bg-success.alert
+          .flash-message.flash-message__alert
             = flash[:alert]
     = yield
+    = render 'layouts/footer'

@@ -1,13 +1,15 @@
-.header
+header.header
   .header-logo
     = link_to root_path
       h3 ノマドカフェ
   ul.header-nav
     - if user_signed_in?
       li.header-nav__item
-        = link_to '管理画面', back_posts_path
+        = link_to '新規投稿', new_back_post_path
       li.header-nav__item
-        = link_to 'ログアウト', destroy_user_session_path
+        = link_to '投稿一覧', back_posts_path
+      li.header-nav__item
+        = link_to 'ログアウト', destroy_user_session_path, method: :delete
     - else
       li.header-nav__item
         = link_to '新規登録', new_user_registration_path

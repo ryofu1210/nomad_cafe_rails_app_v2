@@ -1,8 +1,3 @@
-/ p jQuery稼働テスト(未稼働)
-/ javascript:
-/   $(document).ready(function() {
-/     $("p").text("jQuery稼働テスト(稼働中)");
-/   });
 - unless @area
   - add_breadcrumb "Home", root_path
   - add_breadcrumb "すべて"
@@ -11,31 +6,30 @@
   - add_breadcrumb "すべて", posts_path
   - add_breadcrumb "#{@area.name}"
 
+section.breadcrumb
+  = render_breadcrumbs separator: ' > ' 
+
+section.mainVisual
+  .mainVisual-img
+    img src="/assets/mainvisual_2.png" class="mainVisual-img__content"
+  .mainVisual-inner
+    h1.mainVisual-description
+      = title_in_body(@area)
+
+    = form_with scope: :post, url: @current_path, method: :get, local: true, class:"search-form"  do |f|
+      - if @search_params[:tag_ids]
+        - @search_params[:tag_ids].each do |tag_id|
+          = f.hidden_field :tag_ids, multiple: true, value: tag_id
+      = f.text_field :word, value: @search_params[:word], class:"search-text"
+      = f.button class:"search-submit"
+        = fa_icon "search"
+
+    = form_with scope: :post, url: @current_path, method: :get, local: true, class:"select-form" do |f|
+      = f.hidden_field :word, value: @search_params[:word]
+      = f.hidden_field :tag_ids, value: @search_params[:tag_ids]
+      = f.collection_select :area, @areas, :id, :name, {prompt: "エリア選択"}
 
 .container
-  .layout-header
-    .header-box
-      .header-breadcrumb
-        = render_breadcrumbs separator: ' > ' 
-      h1.header-title
-        = title_in_body(@area)
-
-      .header-form
-        = form_with scope: :post, url: @current_path, method: :get, local: true do |f|
-          - if @search_params[:tag_ids]
-            - @search_params[:tag_ids].each do |tag_id|
-              = f.hidden_field :tag_ids, multiple: true, value: tag_id
-          = f.text_field :word, value: @search_params[:word], class:"form-control"
-          = f.button "検索", class:"btn btn-secondary"
-
-        / h2 エリア一覧
-        / - @areas.each do |area|
-        /   = link_to area.name, area_path(area)
-        /   br
-        = form_with scope: :post, url: @current_path, method: :get, local: true do |f|
-          = f.hidden_field :word, value: @search_params[:word]
-          = f.hidden_field :tag_ids, value: @search_params[:tag_ids]
-          = f.collection_select :area, @areas, :id, :name, {prompt: "エリア選択"}
   .layout-body
     .layout-nav
       .nav
@@ -49,13 +43,13 @@
               .nav-selected__tag
                 = selected_tag.name
         h2.nav-title 検索条件
-        = form_with scope: :post, url: @current_path, method: :get, local: true do |f|
+        = form_with scope: :post, url: @current_path, method: :get, local: true, class:"checkbox-form" do |f|
           = f.hidden_field :word, value: @search_params[:word]
           - @tags.each do |tag|
-            .nav-form__checkbox
-              = f.check_box 'tag_ids', {multiple: true, checked: @search_params[:tag_ids].try(:include?, tag.id.to_s) }, tag.id, false
-              = f.label "tag_ids_#{tag.id}", tag.name
-          = f.button "検索"
+            .checkbox-item
+              = f.check_box 'tag_ids', {multiple: true, checked: @search_params[:tag_ids].try(:include?, tag.id.to_s) , class:"checkbox-item__input"}, tag.id, false
+              = f.label "tag_ids_#{tag.id}", tag.name, class:"checkbox-item__label"
+          = f.button "検索", class:"btn01 btn-center"
 
     .layout-content
       / .sort
@@ -68,6 +62,7 @@
       /     li.sort-item 急上昇PV
       .card-list-horizontal
         = render partial: 'shared/post_horizontal', collection: @posts, as: :post
-        = paginate @posts
+        .bootstrap
+          = paginate @posts
 
 

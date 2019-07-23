@@ -38,6 +38,7 @@ class PostsController < ApplicationController
   def search_params
     @search_params = params.fetch(:post,{})
                             .permit(:word, {tag_ids:[]} )
+                            .reject {|k,v| v.blank? }
   end
 
   def set_common_data
