@@ -1,25 +1,27 @@
-h1 post index
-= form_with url: posts_path, method: :get, local: true do |f|
-  = f.text_field :search, value: @search_params[:word], class:"form-control"
-  = f.button "検索", class:"btn btn-secondary"
+/ h1 post index
+section.mainVisual
+  .mainVisual-img
+    img src="/assets/top_image280.png" class="mainVisual-img__content"
+  .mainVisual-inner
+    p.mainVisual-description ノマドワーカーにぴったりなカフェがみつかる
+    = form_with url: posts_path, method: :get, local: true, class:"search-form" do |f|
+      = f.text_field :word, value: @search_params[:word],placeholder: "検索", class:"search-text"
+      = f.button class:"search-submit"
+        = fa_icon "search"
 
-= form_with scope: :post, url: posts_path, method: :get, local: true do |f|
-  = f.collection_select :area, @areas, :id, :name, {prompt: "エリア選択"}
+    = form_with scope: :post, url: posts_path, method: :get, local: true, class:"select-form cp_sl01" do |f|
+      = f.collection_select :area, @areas, :id, :name, {prompt: "エリア選択"}
 
-/ h2 エリア一覧
-/ - @areas.each do |area|
-/   = link_to area.name, area_path(area)
-/   br
-h2 おすすめ一覧
-.card-list
-  = render partial: 'shared/post', collection: @featured_posts, as: :post
-= link_to 'もっとみる', posts_path
+section.main-container
+  h2.main-title おすすめ一覧
+  .card-list
+    = render partial: 'shared/post', collection: @featured_posts, as: :post  
+  .main-link
+    = link_to 'もっとみる', posts_path, {class:"link__more"}
 
-h2 急上昇ランキング
-.card-list
-  = render partial: 'shared/post', collection: @popular_posts, as: :post
-
-h2 一覧
-.card-list
-  = render partial: 'shared/post', collection: @posts, as: :post
-
+section.main-container
+  h2.main-title 急上昇ランキング
+  .card-list
+    = render partial: 'shared/post', collection: @popular_posts, as: :post
+  .main-link
+    = link_to 'もっとみる', posts_path, {class:"link__more"}
