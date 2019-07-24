@@ -1,2 +1,11 @@
-h1 showview
 = @post.name
+= @post.description
+= @post.area.name
+= image_tag @post.image.url
+
+- @post.tags.each do |tag|
+  = tag.name
+
+- @post.items.each do |item|
+  = item.target_type
+  / = render partial: "posts/item_#{item.target_type}"

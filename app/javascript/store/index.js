@@ -8,7 +8,9 @@ Vue.use(Vuex);
 
 const state = {
   post: {},
-  items: []
+  items: [],
+  areas: [],
+  tags: []
 };
 
 export default new Vuex.Store({

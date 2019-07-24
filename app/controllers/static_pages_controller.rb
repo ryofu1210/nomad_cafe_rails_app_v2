@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  skip_before_action :authenticate_user!
   def home
     @search_params = params.slice(:word)
     @areas = Area.all

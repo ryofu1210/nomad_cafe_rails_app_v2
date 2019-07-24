@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :search_params, only: %w(index area_index)
   after_action :pageview_countup, only: %w(show)
   impressionist :actions=> [:show]

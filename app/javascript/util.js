@@ -1,9 +1,11 @@
 import _ from 'lodash';
 
 export default class IteemParameter{
-  constructor(post, items){
+  constructor(post, items, selected_area, selected_tags){
     this.post = post;
     this.items = items;
+    this.selected_area = selected_area;
+    this.selected_tags = selected_tags;
     this.result = null;
   }
 
@@ -16,6 +18,8 @@ export default class IteemParameter{
       description: this.post.description,
       image: this.post.image,
       status: this.post.status,
+      area_id: this.selected_area,
+      tag_ids: this.selected_tags,
       items_attributes: 
         this.items.map(item => this.trimItem(item))
     }

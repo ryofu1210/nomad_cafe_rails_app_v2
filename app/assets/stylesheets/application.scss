@@ -46,6 +46,30 @@
   }
 }
 
+.vue-flash{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:50px;
+  text-align: center;
+  color:white;
+  z-index:100;
+
+  .vue-flash-message{
+    padding:15px 0;
+    font-size:20px;
+
+  }
+
+  .vue-flash-message__notice{
+    background-color:blue;
+  }
+  .vue-flash-message__alert{
+    background-color:red;
+  }
+}
+
 .header{
   display: -webkit-flex;
   display: flex;

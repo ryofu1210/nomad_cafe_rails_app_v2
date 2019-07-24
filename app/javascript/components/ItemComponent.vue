@@ -1,15 +1,31 @@
 <template>
-  <div class="item-component__box" @mouseover="menuShown = true" @mouseleave="menuShown = false">
+  <div class="item-component" @mouseover="menuShown = true" @mouseleave="menuShown = false">
     <div class="item-component__menu" v-if="menuShown && !editing">
-      <button @click="handleDown(sortrank, totalcount)">下に移動</button>
-      <button @click="handleUp(sortrank)">上に移動</button>
+      <button 
+        @click="handleDown(sortrank, totalcount)"
+        class="item-component__menu-btn"
+      >
+      下に移動
+      </button>
+      <button 
+        @click="handleUp(sortrank)"
+        class="item-component__menu-btn"
+      >
+      上に移動
+      </button>
       <button 
         v-if="!editing" 
         @click="handleEditingStart(sortrank)"
+        class="item-component__menu-btn"
       >
       修正
       </button>
-      <button @click="handleDelete(sortrank)">削除</button>
+      <button 
+        @click="handleDelete(sortrank)"
+        class="item-component__menu-btn"
+      >
+      削除
+      </button>
     </div>
     <div class="item-component__content">
       <ItemForm 
@@ -109,19 +125,4 @@ export default {
 </script>
 
 <style scoped>
-.item-component__box{
-  position: relative;
-}
-.item-component__menu{
-  /* display:fixed; */
-  position: absolute;
-  top:100;
-  left:0;
-}
-.item-component__content{
-  min-height: 50px;
-  padding:10px 0 0 0;
-  margin-bottom:30px;
-}
-
 </style>

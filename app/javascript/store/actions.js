@@ -54,20 +54,33 @@ const actions = {
   // },
 
 
-  update: ({commit},{id, post, items})=>{
-    const ItemParams = new ItemParameter(post, items)
+  update: ({commit},{id, post, items, selected_area, selected_tags})=>{
+    const ItemParams = new ItemParameter(post, items, selected_area, selected_tags)
     const item_params = ItemParams.trim()
     return client.patch(`/api/posts/${id}.json`, {post: item_params})
             // .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
   },
 
-  create: ({commit},{post, items})=>{
-    const ItemParams = new ItemParameter(post, items)
+  create: ({commit},{post, items, selected_area})=>{
+    const ItemParams = new ItemParameter(post, items, selected_area, selected_tags)
     const item_params = ItemParams.trim()
     return client.post(`/api/posts.json`, {post: item_params})
             // .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
   },
 
+  accepted: ({commit},{id})=>{
+    const status = "accepted"
+    return client.patch(`/api/posts/update_status/${id}.json`, {post: {status: status}})
+            .then(() => commit(types.UPDATE_STATUS, status))
+            .catch(err => {throw err})
+  },
+
+  editing: ({commit},{id})=>{
+    const status = "editing"
+    return client.patch(`/api/posts/update_status/${id}.json`, {post: {status: status}})
+            .then(() => commit(types.UPDATE_STATUS, status))
+            .catch(err => {throw err})
+  },
 
 };
 

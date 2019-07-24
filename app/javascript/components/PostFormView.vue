@@ -1,48 +1,99 @@
 <template>
-  <div class="post-view">
-    <!-- {{message}} -->
-    <!-- <p class="post_params">{{datapostparams}}</p> -->
-    <div>
-      <label>Name</label>
-      <input type="text" v-model="post.name" >
-      <p>{{name_message}}</p>
-    </div>
-    <div>
-      <label>Description</label>
-      <textarea v-model="post.description" ></textarea>
-      <p>{{description_message}}</p>
-    </div>
-    <div class="header-image__box">
-      <label>画像</label>
-      <input type="file" @change="handleUploadFile">
-      <div class="preview-item">
-        <!-- <p class="preview-item-name">{{ imageName }}</p> -->
-        <img
-          class="preview-item-file"
-          :src="post.image"
-          alt=""
-        />
+  <div>
+    <div class="vue-flash" v-if="notice_mode || alert_mode">
+      <div class="vue-flash-message vue-flash-message__notice" v-if="notice_mode">
+        {{notice_message}}
+      </div>
+      <div class="vue-flash-message vue-flash-message__alert" v-if="alert_mode">
+        {{alert_message}}
       </div>
     </div>
+    <div class="form-header">
+      <div class="row form-group">
+        <label class="col-form-label col-2">店舗名</label>
+        <input type="text" v-model="post.name" class="form-control col-7" >
+        <p>{{name_message}}</p>
+      </div>
+      <div class="row form-group">
+        <label class="col-form-label col-2">説明文</label>
+        <textarea 
+          v-model="post.description" 
+          class="form-control col-7"
+          rows="3"
+        ></textarea>
+        <p>{{description_message}}</p>
+      </div>
+      <div class="header-image__box row form-group">
+        <label class="col-form-label col-2">画像</label>
+        <div class="col-7">
+          <input type="file" @change="handleUploadFile" class="fomr-control-file">
+          <div class="preview-img__box mt-2">
+            <img
+              class="preview-img__file"
+              :src="post.image"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label class="col-form-label col-2">エリア選択</label>
+        <select v-model="selected_area" options="areas" >
+          <option 
+            v-for="area in areas" 
+            :value="area.id" 
+            :key="area.id">
+          {{area.name}}
+          </option>
+        </select>
+        <!-- <p>selected {{ selected_area }}</p> -->
+      </div>      
+      <ul class="row form-group">
+        <label class="col-form-label col-2">タグ選択</label>
+        <!-- <li class="mr-3"> -->
+          <label v-for="tag in tags" :key="tag.id" class="form-check-label mr-5">
+            <input 
+              type="checkbox" 
+              v-model="selected_tags" 
+              :value="tag.id"
+              class="form-check-input"
+            >
+            {{tag.name}}
+          </label>
+        <!-- </li> -->
+      </ul>
 
-    <!-- <input type="text" v-model="post.name" > -->
-    <!-- <img :src="post_params.image" > -->
-    <!-- <div class="container-header">
-      <PostEditHeader :post="post" />
-    </div> -->
+    </div>
+
     <div class="container-items">
       <ItemComponentList :items="items" />
     </div>
-    <div class="container-submit__box">
+    <div class="container-submit">
+      <button 
+        v-if="post.status == 'accepted'"
+        class="container-submit__button"
+        @click="handlePublish(post)"
+      >
+      非公開にする
+      </button>
+
+      <button 
+        v-else-if="post.status == 'editing'"
+        class="container-submit__button"
+        @click="handlePublish(post)"
+      >
+      公開にする
+      </button>
+
       <button 
         class="container-submit__button"
-        @click="handleSubmit(post, items)"
+        @click="handleSubmit(post, items, selected_area, selected_tags)"
       >
       保存
       </button>
-      <router-link :to="{ name: 'PostPreviewModal'}">
+      <!-- <router-link :to="{ name: 'PostPreviewModal'}">
         <h3>プレビュー</h3>
-      </router-link>
+      </router-link> -->
     </div>
   <router-view />
   </div>
@@ -50,31 +101,46 @@
 
 <script>
 import ItemComponentList from './ItemComponentList';
-// import PostEditHeader from './PostEditHeader';
+import { setTimeout } from 'timers';
 
 export default {
   name: 'PostFormView',
 
   components: {
     ItemComponentList,
-    // PostEditHeader
   },
 
   data(){
     return {
       message: "",
       progress: false,
-      // datapostparams: this.$store.state.post
-      // datapostparams: this.post_params
       post: {},
       items: [],
+      areas: [],
       name_message: '',
       description_message: '',
+      selected_area: '',
+      tags: [],
+      selected_tags: [],
+      notice_message: '',
+      notice_mode: false,
+      alert_message: '',
+      alert_mode: false,
+
     }
   },
 
   created(){
     this.LoadItems()
+  },
+
+  watch:{
+    'post':{
+      handler:()=>{
+        console.log("statusの値が変わりました。")
+      },
+      deep: true
+    }
   },
 
   computed: {
@@ -102,6 +168,22 @@ export default {
       this.message = ""
     },
 
+    setFlashMessage(message, mode){
+      if(mode === "notice"){
+        this.notice_message = message
+        this.notice_mode = true
+        setTimeout(()=>{
+          this.notice_mode = false
+        },2000)
+      }else if(mode === "alert"){
+        this.alert_message = message
+        this.alert_mode = true
+        setTimeout(()=>{
+          this.alert_mode = false
+        },2000)
+      }
+    },
+
     LoadItems(){
       this.setProgress("読み込み中...")
       const id = this.$route.params.id
@@ -113,7 +195,12 @@ export default {
           })
           .then(()=>{
             this.post = this.$store.state.post
+            // this.status = this.$store.state.post.status
             this.items = this.$store.state.items
+            this.areas = this.$store.state.areas
+            this.selected_area = this.$store.state.post.area_id
+            this.tags = this.$store.state.tags
+            this.selected_tags = this.$store.state.post.tag_ids
             this.resetProgress()
           })
           // this.setPostParams()
@@ -124,19 +211,56 @@ export default {
           })
           .then(()=>{
             this.post = this.$store.state.post
+            // this.status = this.$store.state.post.status
             this.items = this.$store.state.items
+            this.areas = this.$store.state.areas
+            this.tags = this.$store.state.tags
             this.resetProgress()
           })
       }
     },
 
-    handleSubmit(post, items){
+    handleSubmit(post, items, selected_area, selected_tags){
       this.canSave()
       const id = this.$route.params.id
       if(id){
-        this.$store.dispatch('update', {id, post, items})
+        this.$store.dispatch('update', {id, post, items, selected_area, selected_tags})
+          .then(()=>{
+            this.setFlashMessage("保存に成功しました。","notice")
+          })
+          .catch(()=>{
+            this.setFlashMessage("保存に失敗しました。","alert")
+          })
       }else{
-        this.$store.dispatch('create', {post, items})
+        this.$store.dispatch('create', {post, items, selected_area, selected_tags})
+          .then(()=>{
+            this.setFlashMessage("保存に成功しました。","notice")
+          })
+          .catch(()=>{
+            this.setFlashMessage("保存に失敗しました。","alert")
+          })
+        }
+    },
+
+    handlePublish(post){
+      const id = this.$route.params.id
+
+      if(post.status == "editing"){
+        this.$store.dispatch('accepted',{id})
+          .then(()=>{
+            this.setFlashMessage("公開状況を公開に変更しました。","notice")
+          })
+          .catch(()=>{
+            this.setFlashMessage("公開状況の更新に失敗しました。","alert")
+          })
+      }else if(post.status == "accepted"){
+        this.$store.dispatch('editing',{id})
+          .then(()=>{
+            this.setFlashMessage("公開状況を下書きに変更しました。","notice")
+          })
+          .catch(()=>{
+            this.setFlashMessage("公開状況の更新に失敗しました。","alert")
+          })
       }
     },
 
@@ -189,36 +313,4 @@ export default {
 </script>
 
 <style scoped>
-.container-items{
-  width:600px;
-  height:100%;
-  margin:0 auto;
-}
-.container-submit__box{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  padding:15px 0;
-  background-color:rgba(0, 0, 0, 0.3);
-}
-.container-submit__button{
-  color:white;
-  background-color:#3f51b5;
-  border:1px solid #283593;
-  padding:7px 10px;
-  font-size:12px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.preview-item{
-  width:400px;
-  height:100%;
-}
-.preview-item-file{
-  width:100%;
-  height:100%;
-}
-
 </style>

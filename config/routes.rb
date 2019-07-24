@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   namespace :api, {format: 'json'} do
     resources :posts, only: %w(edit new update create)
+    patch '/posts/update_status/:id', to: 'posts#update_status'
   end
 
   devise_for :users, controllers: {

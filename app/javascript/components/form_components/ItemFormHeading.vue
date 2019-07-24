@@ -8,16 +8,22 @@
         class="item-form__textarea"
       >
     </div>
-    <div>
+    <div class="item-form__message">
       <p>{{ message }}</p>
     </div>
-    <div>
+    <div class="item-form__btns">
       <button 
         @click="handleUpdate(dataTitle, sortrank)"
+         class="item-form__btn-save"
       >
       閉じる
       </button>
-      <button @click="handleCansel(sortrank)">キャンセル</button>
+      <button 
+        @click="handleCansel(sortrank)"
+        class="item-form__btn-cansel"
+      >
+      キャンセル
+      </button>
       <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>

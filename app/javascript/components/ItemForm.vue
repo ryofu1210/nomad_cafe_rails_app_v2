@@ -71,24 +71,4 @@ export default {
 
 </style>
 <style>
-.item-form{
-  border:1px solid #ddd;
-  margin-bottom:30px;
-
-}
-.item-form__header{
-  font-size:12px;
-  background-color:#eee;
-  font-weight: bold;
-  padding:2px 5px;
-}
-.item-form__content{
-  padding:15px 10px;
-
-}
-.item-form__textarea{
-  width:100%;
-  font-size:20px;
-  background-color:#eee;
-}
 </style>

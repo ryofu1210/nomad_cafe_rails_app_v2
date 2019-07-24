@@ -1,4 +1,6 @@
 class AreasController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def show
     @search_params = params.slice(:word)
     @area = Area.find(params[:id])

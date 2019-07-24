@@ -1,5 +1,5 @@
 class Api::PostsController < ApplicationController
-  before_action :set_post, only: %w(update)
+  before_action :set_post, only: %w(update update_status)
 
   def edit
     @post = Post.find(params[:id])
@@ -29,6 +29,16 @@ class Api::PostsController < ApplicationController
     end
   end
 
+  def update_status
+    if @post.update(post_params)
+      flash[:notice] = "投稿の公開状況が更新されました。"
+      head :no_content
+    else
+      flash[:alert] = "投稿の公開状況の更新に失敗しました。"
+      render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
     def set_store
       @post_params = {
@@ -36,10 +46,12 @@ class Api::PostsController < ApplicationController
         name: @post.name,
         description: @post.description,
         image: @post.image.url,
+        status: @post.status,
+        area_id: @post.area_id,
+        tag_ids: @post.tag_ids,
       }
   
       @items = Item.where(post_id: @post.id).order(:sortrank)
-  
       @items_params = @items.map {|item|
         item_default_params = {
           id: item.id,
@@ -57,6 +69,21 @@ class Api::PostsController < ApplicationController
           item_default_params.merge({image: item.target.image.url})
         end
       }
+
+      @areas_params = Area.all.map {|area|
+        area_params = {
+          id: area.id,
+          name: area.name,
+        }
+      }
+
+      @tags_params = Tag.all.map {|tag|
+        tag_params = {
+          id: tag.id,
+          name: tag.name,
+        }
+      }
+      logger.debug(@areas_params)
       # logger.debug(@items_params)
     end
 
@@ -76,7 +103,8 @@ class Api::PostsController < ApplicationController
           # {image: :url},
           :image,
           :status,
-
+          :area_id,
+          tag_ids:[],
           items_attributes: [
             :id,
             :post_id,
