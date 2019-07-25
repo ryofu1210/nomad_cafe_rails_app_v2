@@ -27,6 +27,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @tags = @post.tags
+    @area = @post.area
+    @items = @post.items
     impressionist(@post, nil, unique: [:session_hash])
   end
 

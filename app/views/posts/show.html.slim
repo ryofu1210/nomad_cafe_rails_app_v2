@@ -1,11 +1,20 @@
+- add_breadcrumb "Home", root_path
+- add_breadcrumb "すべて", posts_path
+- add_breadcrumb "#{@area.name}", area_path(@area)
+- add_breadcrumb "#{@post.name}"
+
+section.breadcrumb
+  = render_breadcrumbs separator: ' > ' 
+
+
 = @post.name
 = @post.description
 = @post.area.name
 = image_tag @post.image.url
 
-- @post.tags.each do |tag|
+- @tags.each do |tag|
   = tag.name
 
-- @post.items.each do |item|
-  = item.target_type
-  / = render partial: "posts/item_#{item.target_type}"
+- @items.each do |item|
+  / = item.target_type
+  = render partial: "posts/items/#{item.target_type}", locals: {item: item.target}
