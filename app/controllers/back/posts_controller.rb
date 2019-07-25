@@ -1,4 +1,5 @@
 class Back::PostsController < ApplicationController
+  load_and_authorize_resource
   ITEMS_PER_PAGE = 3
 
   def index
