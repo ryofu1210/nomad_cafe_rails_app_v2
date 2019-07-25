@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:name) {|n| "STORE NAME#{n}"}
     description {"説明説明説明説明説明説明説明説明説明説明説明説明"}
     image {File.open("#{Rails.root}/spec/fixtures/images/store_image.jpg")}
-    status {0}
+    status {1}
     recommend_degree {1}
     wifi {1}
     wifi_detail {"Wi2/Wi2_club"}

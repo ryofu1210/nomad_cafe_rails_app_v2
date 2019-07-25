@@ -7,17 +7,19 @@ class PostsController < ApplicationController
 
   def index
     set_common_data
-    @posts = Post.user_search(@search_params)
+    @posts = Post.user_search(@search_params).active
               .page(params[:page]).per(ITEMS_PER_PAGE)
-
+    return render status: 404 if @posts.blank?
   end
 
   def area_index
-    set_common_data
     @area = Area.find(params[:id])
-    @posts = Post.where(area_id: @area.id).user_search(@search_params)
-              .page(params[:page]).per(ITEMS_PER_PAGE)
+    # fail ActiveRecord::RecordNotFound if @area.blank?
 
+    set_common_data
+    @posts = Post.where(area_id: @area.id).user_search(@search_params).active
+              .page(params[:page]).per(ITEMS_PER_PAGE)
+    return render action: :index, status: 404 if @posts.blank?
     render action: :index
   end
 
@@ -26,7 +28,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.active.find(params[:id])
     @tags = @post.tags
     @area = @post.area
     @items = @post.items

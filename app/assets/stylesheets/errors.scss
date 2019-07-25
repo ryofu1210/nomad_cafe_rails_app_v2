@@ -1,0 +1,28 @@
+.error{
+  .error-container{
+    width:750px;
+    height:200px;
+    margin:50px auto 20px;
+    padding:20px;
+    background-color: #ddd;
+    border-radius: 15px;
+    .error-container__message{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .error-container__title{
+        font-size:18px;
+        font-weight: bold;
+        margin-bottom:10px;
+      }
+      .error-container__detail{
+        .error-container__description{
+
+        }
+      }
+    }
+  }
+}

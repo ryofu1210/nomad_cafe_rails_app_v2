@@ -101,6 +101,7 @@
   border: 1px solid #e5e5e5;
   padding:16px;
   border-radius:4px;
+  position: relative;
 
   .card-img{
     width:300px;
@@ -178,6 +179,19 @@
 
       }
     }
+
+    .card-body__link{
+      padding:5px 10px;
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      font-size:20px;
+      border:1px solid #fc0;
+      background-color:#fc0;
+      color:#fff;
+      border-radius: 4px;
+    }
+
   }
 }
 

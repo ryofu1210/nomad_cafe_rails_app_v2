@@ -1,0 +1,16 @@
+- add_breadcrumb "HOME", root_path
+- add_breadcrumb "ページが見つかりませんでした"
+
+.error
+  .error-container
+    .error-container__message
+      h1.error-container__title
+        | 
+          お探しのページが見つかりません
+          404 File for Error
+      .error-container__detail
+        p.error-container__description
+          |
+            お探しのページは、一時的にアクセス出来ない状態か移動もしくは削除された可能性があります。
+    -# .error-container__eyecatch
+    -#   %img{src: asset_path("user/error.png"), class:  "error-container__image" }
