@@ -11,8 +11,13 @@
     <div class="form-header">
       <div class="row form-group">
         <label class="col-form-label col-2">店舗名</label>
-        <input type="text" v-model="post.name" class="form-control col-7" >
-        <p>{{name_message}}</p>
+        <input 
+          type="text" 
+          v-model="post.name" 
+          class="form-control col-7" 
+          maxlength="30"
+        >
+        <p v-if="name_message" >{{name_message}}</p>
       </div>
       <div class="row form-group">
         <label class="col-form-label col-2">説明文</label>
@@ -20,8 +25,9 @@
           v-model="post.description" 
           class="form-control col-7"
           rows="3"
+          maxlength="150"
         ></textarea>
-        <p>{{description_message}}</p>
+        <p v-if="description_message" >{{description_message}}</p>
       </div>
       <div class="header-image__box row form-group">
         <label class="col-form-label col-2">画像</label>
@@ -46,7 +52,7 @@
           {{area.name}}
           </option>
         </select>
-        <!-- <p>selected {{ selected_area }}</p> -->
+        <p v-if="area_message" > {{ area_message }}</p>
       </div>      
       <ul class="row form-group">
         <label class="col-form-label col-2">タグ選択</label>
@@ -112,14 +118,15 @@ export default {
 
   data(){
     return {
-      message: "",
+      // message: "",
       progress: false,
       post: {},
       items: [],
-      areas: [],
       name_message: '',
       description_message: '',
+      areas: [],
       selected_area: '',
+      area_message: '',
       tags: [],
       selected_tags: [],
       notice_message: '',
@@ -137,7 +144,7 @@ export default {
   watch:{
     'post':{
       handler:()=>{
-        console.log("statusの値が変わりました。")
+        // console.log("statusの値が変わりました。")
       },
       deep: true
     }
@@ -221,7 +228,7 @@ export default {
     },
 
     handleSubmit(post, items, selected_area, selected_tags){
-      this.canSave()
+      if(!this.canSave()){return;}
       const id = this.$route.params.id
       if(id){
         this.$store.dispatch('update', {id, post, items, selected_area, selected_tags})
@@ -274,11 +281,17 @@ export default {
         this.description_message = '説明文は必ず入力してください。'
         error_count += 1
       }
+      if(this.selected_area.length == 0){
+        this.area_message = 'エリアは必ず入力してください。'
+        error_count += 1
+      }
+
       if(error_count > 0){
-        return
+        return false
       }
       this.name_message = ''
       this.description_message = ''
+      return true
     },
 
     handleUpdate(imagePath, sortrank){

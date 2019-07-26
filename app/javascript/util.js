@@ -21,16 +21,16 @@ export default class IteemParameter{
       area_id: this.selected_area,
       tag_ids: this.selected_tags,
       items_attributes: 
-        this.items.map(item => this.trimItem(item))
+        this.items.map((item,index) => this.trimItem(item, index+1))
     }
     return this.result
   }
 
-  trimItem(item){
+  trimItem(item,sortrank){
     const commonParams = {
       id: item.id,
       post_id: item.post_id,
-      sortrank: item.sortrank,
+      sortrank: sortrank,
       target_type: item.target_type,
       target_id: item.target_id,
     }

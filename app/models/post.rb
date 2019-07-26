@@ -39,6 +39,11 @@ class Post < ApplicationRecord
 
   enum status: { editing: 0, accepted: 1, deleted: 2}
 
+  validates :name, presence: true,length: {maximum: 50}
+  validates :description, presence: true,length: {maximum: 150}
+  validates :area_id, presence: true
+
+
   scope :by_id, -> (id = nil) { where(id: id) if id.present? }
   scope :by_name, -> (name = nil) { where('name LIKE ?',"%#{name}%") if name.present? }
   scope :by_status, -> (status_ids = nil) { where(status: status_ids) if status_ids.present? }
@@ -90,6 +95,8 @@ class Post < ApplicationRecord
   # post関連テーブルitem,item_xxxをあわせたparamsを受け取り、複数テーブル同時に更新する
   def save_all(params)
     ActiveRecord::Base.transaction do
+      # validate_sort_rank_uniqueness!(params[ITEMS_ATTRIBUTES])
+      delete_unnecessary_items!(params[:items_attributes]) if id
       params[:items_attributes] = params[:items_attributes].map do |item|
         target = item[:target_type].constantize.find_or_initialize_by(id: item[:target_id])
 
@@ -140,5 +147,17 @@ class Post < ApplicationRecord
                 .order(['field(id, ?)',post_ids])
                 .limit(6)
   end
+
+  # def validate_sort_rank_uniqueness!(params)
+  #   sort_rank_list = params.map { |key, _| key['sortrank'] }
+  #   fail ArgumentError, 'sort rank is not unique!' unless sort_rank_list.size == sort_rank_list.uniq.size
+  # end
+
+  def delete_unnecessary_items!(params)
+    removed_ids = items.map(&:id) - params.map { |key, _| key['id'] }
+    Item.where(post_id: id, id: removed_ids).find_each(&:destroy!)
+  end
+
+
 
 end
