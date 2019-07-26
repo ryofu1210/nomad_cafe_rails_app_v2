@@ -39,7 +39,7 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 gem 'carrierwave'
 gem 'rmagick'
-gem 'slim-rails'
+gem 'slim-rails'  # ERBからSLIMに変換する
 gem 'html2slim'
 gem 'kaminari'
 gem 'enum_help'
@@ -53,7 +53,9 @@ gem 'font-awesome-rails'
 gem 'breadcrumbs_on_rails'        # パンくず
 gem "bootstrap", ">= 4.3.1"
 gem 'cancancan'
-gem 'rubocop', require: false
+
+# 矯正ツール
+gem 'rubocop', require: false # Rails校正ツール
 
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -73,7 +75,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'letter_opener'
+  
+  # 開発環境用メール配信ツール
+  gem 'letter_opener' 
   gem 'letter_opener_web'
   gem 'spring-commands-rspec'
 end
@@ -84,6 +88,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  gem "shoulda-matchers"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
