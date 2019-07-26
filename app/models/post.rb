@@ -27,11 +27,11 @@ class Post < ApplicationRecord
 
   belongs_to :user
   belongs_to :area
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :favorited_users, source: :user, through: :favorites
-  has_one :featured_post
+  has_one :featured_post, dependent: :destroy
   has_many :items, -> { order('sortrank asc') }, dependent: :destroy, inverse_of: :post
-  has_many :post_tags
+  has_many :post_tags, dependent: :destroy
   has_many :tags, through: :post_tags
 
   accepts_nested_attributes_for :items, reject_if: ->(attributes) { attributes['target_type'].blank? }

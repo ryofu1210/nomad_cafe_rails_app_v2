@@ -7,43 +7,22 @@ RSpec.describe Post, type: :model do
   end
 
   describe '#validation' do
-    context '正常系' do
-      it '有効なPOSTの検証' do
-        expect(@post).to be_valid
-      end
-    end
+    it { is_expected.to have_many(:favorites).dependent(:destroy) }
+    it { is_expected.to have_many(:favorited_users) }
+    it { is_expected.to have_one(:featured_post).dependent(:destroy) }
+    it { is_expected.to have_many(:items).order('sortrank asc').dependent(:destroy) }
+    it { is_expected.to have_many(:post_tags).dependent(:destroy) }
+    it { is_expected.to have_many(:tags) }
+    it { is_expected.to belong_to(:user) }
+    # it { is_expected.to belong_to(:area) }
+    it { is_expected.to define_enum_for(:status).with(%i(editing accepted deleted)) }
 
-    context '異常系' do
-      it 'nameの存在性検証' do
-        @post.name = ''
-        expect(@post).not_to be_valid
-      end
 
-      it 'nameの最大長さ検証' do
-        @post.name = 'a' * 51
-        expect(@post).not_to be_valid
-      end
-
-      it 'descriptionの存在性検証' do
-        @post.description = ''
-        expect(@post).not_to be_valid
-      end
-
-      it 'descriptionの最大長さ検証' do
-        @post.description = 'a' * 151
-        expect(@post).not_to be_valid
-      end
-
-      it 'user_idの存在性検証' do
-        @post.user_id = ''
-        expect(@post).not_to be_valid
-      end
-
-      it 'statusの存在性検証' do
-        @post.status = nil
-        expect(@post).not_to be_valid
-      end
-    end
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(50) }
+    it { is_expected.to validate_presence_of(:description) }
+    it { is_expected.to validate_length_of(:description).is_at_most(150) }
+    it { is_expected.to validate_presence_of(:status) }
   end
 
   describe '#search' do
