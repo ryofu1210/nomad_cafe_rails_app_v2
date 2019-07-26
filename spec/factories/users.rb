@@ -37,5 +37,13 @@ FactoryBot.define do
     password_confirmation {"password"}
     role {1}
     confirmed_at {Time.now}
+
+    trait :guest do
+      role {0}
+    end
+
+    trait :admin do
+      role {1}
+    end
   end
 end

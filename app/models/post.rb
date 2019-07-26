@@ -42,8 +42,9 @@ class Post < ApplicationRecord
   validates :name, presence: true,length: {maximum: 50}
   validates :description, presence: true,length: {maximum: 150}
   validates :area_id, presence: true
+  validates :status, presence: true, inclusion: { in: Post.statuses.keys }
 
-
+  
   scope :by_id, -> (id = nil) { where(id: id) if id.present? }
   scope :by_name, -> (name = nil) { where('name LIKE ?',"%#{name}%") if name.present? }
   scope :by_status, -> (status_ids = nil) { where(status: status_ids) if status_ids.present? }

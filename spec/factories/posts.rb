@@ -11,5 +11,18 @@ FactoryBot.define do
     outret {1}
     longstay_degree {1}
     area_id {1}
+
+    trait :editing do
+      status {0}
+    end
+
+    trait :accepted do
+      status {1}
+    end
+
+    trait :deleted do
+      status {2}
+    end
+
   end
 end
