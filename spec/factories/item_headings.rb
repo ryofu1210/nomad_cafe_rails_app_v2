@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :item_heading do
-    title {"title"}
+    title { 'title' }
   end
 end

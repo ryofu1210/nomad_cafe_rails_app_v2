@@ -15,7 +15,6 @@ class RedisService
   #   $redis.get()
   # end
 
-
   # アクセスされた時にカウントアップ
   def self.countup(post_id)
     post = Post.find(post_id)
@@ -29,18 +28,19 @@ class RedisService
   end
 
   private
+
   # 日別PVカウント
   def self.countup_daily_post_ranking(post_id, date)
     $redis.zincrby(daily_post_ranking_key(date),
-                    1,
-                    post_id)
+                   1,
+                   post_id)
   end
 
   # 日別エリア別PVカウント
   def self.countup_daily_area_post_ranking(post_id, date, area_id)
     $redis.zincrby(daily_area_post_ranking_key(date, area_id),
-                    1,
-                    post_id)
+                   1,
+                   post_id)
   end
 
   # Total PVカウント
@@ -49,7 +49,6 @@ class RedisService
   #                 1,
   #                 post_id)
   # end
-
 
   # 日別PVカウント用キー
   def self.daily_post_ranking_key(date)
@@ -65,5 +64,4 @@ class RedisService
   # def self.post_pageviews_key()
   #   "/pageviews"
   # end
-
 end

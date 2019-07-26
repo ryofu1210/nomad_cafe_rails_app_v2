@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
     @areas = Area.all
     # byebug
     @featured_posts = FeaturedPost.order(:sortrank)
-                                  .select {|fp| fp.post.accepted?}
+                                  .select { |fp| fp.post.accepted? }
                                   .map(&:post)
                                   .take(6)
     # byebug

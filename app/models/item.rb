@@ -21,5 +21,4 @@ class Item < ApplicationRecord
 
   validates :sortrank, presence: true
   # validates :target_type, presence: true, inclusion: { in: Item.target_types.keys }
-
 end

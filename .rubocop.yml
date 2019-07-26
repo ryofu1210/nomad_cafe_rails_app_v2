@@ -11,6 +11,7 @@ AllCops:
     - db/**/*
     - config/**/*
     - Gemfile
+    - node_modules/**/*
 
 # Missing magic comment # frozen_string_literal: true. を無視
 Style/FrozenStringLiteralComment:
@@ -27,3 +28,16 @@ Metrics/LineLength:
 # Use nested module/class definitions instead of compact style. を無視
 Style/ClassAndModuleChildren:
   Enabled: false
+
+# 日本語コメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# Classの行数制限無視
+Metrics/ClassLength:
+  Enabled: false
+
+# Methodの行数制限無視
+Metrics/MethodLength:
+  Enabled: false
+

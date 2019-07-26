@@ -12,5 +12,4 @@ class FeaturedPost < ApplicationRecord
   belongs_to :post
   validates :sortrank, presence: true, inclusion: { in: (1..MAX_NUMBER).to_a }
   validates :post_id, presence: true, uniqueness: true
-
 end

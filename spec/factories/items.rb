@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item do
     association :post
-    sequence(:sortrank) {|n| n}
+    sequence(:sortrank) { |n| n }
 
     trait :heading do
       association :target, factory: :item_heading

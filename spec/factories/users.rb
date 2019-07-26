@@ -30,20 +30,20 @@
 
 FactoryBot.define do
   factory :user do
-    sequence(:nickname) {|n| "NICKNAME#{n}"}
-    profile {"プロフィールプロフィールプロフィール"}
-    sequence(:email) {|n| "sample#{n}@example.com"}
-    password {"password"}
-    password_confirmation {"password"}
-    role {1}
-    confirmed_at {Time.now}
+    sequence(:nickname) { |n| "NICKNAME#{n}" }
+    profile { 'プロフィールプロフィールプロフィール' }
+    sequence(:email) { |n| "sample#{n}@example.com" }
+    password { 'password' }
+    password_confirmation { 'password' }
+    role { 1 }
+    confirmed_at { Time.now }
 
     trait :guest do
-      role {0}
+      role { 0 }
     end
 
     trait :admin do
-      role {1}
+      role { 1 }
     end
   end
 end

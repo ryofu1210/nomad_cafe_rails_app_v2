@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :item_text do
-    body {"bodybodybodybodybodybodybodybodybody"}
+    body { 'bodybodybodybodybodybodybodybodybody' }
   end
 end
