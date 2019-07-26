@@ -95,7 +95,7 @@ class Post < ApplicationRecord
   # post関連テーブルitem,item_xxxをあわせたparamsを受け取り、複数テーブル同時に更新する
   def save_all(params)
     ActiveRecord::Base.transaction do
-      # validate_sort_rank_uniqueness!(params[ITEMS_ATTRIBUTES])
+      validate_sort_rank_uniqueness!(params[:items_attributes])
       delete_unnecessary_items!(params[:items_attributes]) if id
       params[:items_attributes] = params[:items_attributes].map do |item|
         target = item[:target_type].constantize.find_or_initialize_by(id: item[:target_id])
@@ -148,10 +148,10 @@ class Post < ApplicationRecord
                 .limit(6)
   end
 
-  # def validate_sort_rank_uniqueness!(params)
-  #   sort_rank_list = params.map { |key, _| key['sortrank'] }
-  #   fail ArgumentError, 'sort rank is not unique!' unless sort_rank_list.size == sort_rank_list.uniq.size
-  # end
+  def validate_sort_rank_uniqueness!(params)
+    sort_rank_list = params.map { |key, _| key['sortrank'] }
+    fail ArgumentError, 'sort rank is not unique!' unless sort_rank_list.size == sort_rank_list.uniq.size
+  end
 
   def delete_unnecessary_items!(params)
     removed_ids = items.map(&:id) - params.map { |key, _| key['id'] }
