@@ -31,10 +31,11 @@ class Post < ApplicationRecord
   has_many :favorited_users, source: :user, through: :favorites
   has_one :featured_post, dependent: :destroy
   has_many :items, -> { order('sortrank asc') }, dependent: :destroy, inverse_of: :post
-  has_many :post_tags, dependent: :destroy
+  has_many :post_tags, dependent: :destroy, inverse_of: :post
   has_many :tags, through: :post_tags
 
   accepts_nested_attributes_for :items, reject_if: ->(attributes) { attributes['target_type'].blank? }
+  accepts_nested_attributes_for :post_tags
   mount_uploader :image, PostImageUploader
 
   enum status: { editing: 0, accepted: 1, deleted: 2 }
@@ -96,6 +97,7 @@ class Post < ApplicationRecord
   # post関連テーブルitem,item_xxxをあわせたparamsを受け取り、複数テーブル同時に更新する
   def save_all(params)
     ActiveRecord::Base.transaction do
+      # byebug
       validate_sort_rank_uniqueness!(params[:items_attributes])
       delete_unnecessary_items!(params[:items_attributes]) if id
       params[:items_attributes] = params[:items_attributes].map do |item|
@@ -105,8 +107,8 @@ class Post < ApplicationRecord
         target.body  = item[:body] if item[:body]
         target.image = item[:image] if item[:image]
         logger.debug(target)
-
-        target.image = convert_data_uri_to_upload(item[:image]) if %(ItemImage).include?(target.class.name) && item[:image] && target.image.try(:url) != item['image']
+        # byebug
+        target.image = convert_data_uri_to_upload(item[:image]) if %(ItemImage).include?(target.class.name) && item[:image] && target.image.try(:url) != item[:image]
         target.save!
         item_id = item[:id]
         item_sortrank = item[:sortrank]
@@ -121,7 +123,8 @@ class Post < ApplicationRecord
           target_id: target.id
         )
       end
-      params[:image] = convert_data_uri_to_upload(params[:image])
+      # byebug
+      params[:image] = convert_data_uri_to_upload(params[:image]) if params[:image]
       update!(params)
       true
     end
@@ -146,12 +149,12 @@ class Post < ApplicationRecord
   end
 
   def validate_sort_rank_uniqueness!(params)
-    sort_rank_list = params.map { |key, _| key['sortrank'] }
+    sort_rank_list = params.map { |key, _| key[:sortrank] }
     raise ArgumentError, 'sort rank is not unique!' unless sort_rank_list.size == sort_rank_list.uniq.size
   end
 
   def delete_unnecessary_items!(params)
-    removed_ids = items.map(&:id) - params.map { |key, _| key['id'] }
+    removed_ids = items.map(&:id) - params.map { |key, _| key[:id] }
     Item.where(post_id: id, id: removed_ids).find_each(&:destroy!)
   end
 end

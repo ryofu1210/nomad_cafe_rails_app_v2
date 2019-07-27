@@ -61,7 +61,7 @@ const actions = {
             // .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
   },
 
-  create: ({commit},{post, items, selected_area})=>{
+  create: ({commit},{post, items, selected_area, selected_tags})=>{
     const ItemParams = new ItemParameter(post, items, selected_area, selected_tags)
     const item_params = ItemParams.trim()
     return client.post(`/api/posts.json`, {post: item_params})

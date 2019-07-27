@@ -38,4 +38,18 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:password) }
     it { is_expected.to define_enum_for(:role).with(%i(user admin)) }
   end
+
+  describe '#already_favorite?' do
+    let!(:user) { create(:user) }
+    let!(:post) { create(:post) }
+
+    context 'favorite未登録の場合' do
+      it { expect( user.already_favorite?(post.id) ).to be_falsy }
+    end
+
+    context 'favorite登録済みの場合' do
+      let!(:favorite) { create(:favorite, user: user, post: post ) }
+      it { expect( user.already_favorite?(post.id) ).to be_truthy }
+    end
+  end
 end

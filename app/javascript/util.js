@@ -20,10 +20,18 @@ export default class IteemParameter{
       status: this.post.status,
       area_id: this.selected_area,
       tag_ids: this.selected_tags,
+      // post_tags_attributes:
+      //   this.selected_tags.map( (tag_id) => this.trimTag(tag_id) ), 
       items_attributes: 
-        this.items.map((item,index) => this.trimItem(item, index+1))
+        this.items.map( (item,index) => this.trimItem(item, index+1) )
     }
     return this.result
+  }
+
+  trimTag(tag_id){
+    return { tag_id: tag_id,
+             post_id: this.post.id,
+           }
   }
 
   trimItem(item,sortrank){

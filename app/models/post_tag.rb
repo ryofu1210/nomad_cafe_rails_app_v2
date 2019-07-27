@@ -10,9 +10,10 @@
 #
 
 class PostTag < ApplicationRecord
-  belongs_to :post
-  belongs_to :tag
+  belongs_to :post, inverse_of: :post_tags
+  belongs_to :tag, inverse_of: :post_tags
 
-  validates :post_id, presence: true
+  # post_idにpresence:trueを付けて、postモデルと同時にpost_tagsを保存するとなぜか上手くいかない
+  # validates :post_id, presence: true
   validates :tag_id, presence: true, uniqueness: { scope: :post_id }
 end

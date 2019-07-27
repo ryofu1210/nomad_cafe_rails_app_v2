@@ -22,7 +22,8 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(user_id: 1)
+    @post = Post.new(user_id: current_user.id)
+    # byebug
     if @post.save_all(post_params)
       head :no_content
     else
@@ -107,6 +108,10 @@ class Api::PostsController < ApplicationController
       :status,
       :area_id,
       tag_ids: [],
+      # post_tags_attributes: [
+      #   :tag_id, 
+      #   :post_id
+      # ],
       items_attributes: [
         :id,
         :post_id,
@@ -117,7 +122,7 @@ class Api::PostsController < ApplicationController
         :body,
         # {image: :url}
         :image
-      ]
+      ],
     )
   end
 end
