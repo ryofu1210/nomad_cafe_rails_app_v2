@@ -40,16 +40,17 @@ RSpec.describe User, type: :model do
   end
 
   describe '#already_favorite?' do
-    let!(:user) { create(:user) }
-    let!(:post) { create(:post) }
-
+    subject { user.already_favorite?( post_id ) }
+    let(:user) { create(:user) }
+    let(:post) { create(:post) }
+    let(:post_id) { post.id }
     context 'favorite未登録の場合' do
-      it { expect( user.already_favorite?(post.id) ).to be_falsy }
+      it { is_expected.to be_falsy }
     end
 
     context 'favorite登録済みの場合' do
       let!(:favorite) { create(:favorite, user: user, post: post ) }
-      it { expect( user.already_favorite?(post.id) ).to be_truthy }
+      it { is_expected.to be_truthy }
     end
   end
 end
