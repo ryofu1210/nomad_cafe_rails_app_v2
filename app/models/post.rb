@@ -94,6 +94,11 @@ class Post < ApplicationRecord
       .by_tag_ids(search_params[:tag_ids])
   }
 
+  scope :by_user_role, lambda { |user = nil|
+    return if user.admin?
+    where( user_id: user.id )
+  }
+
   # post関連テーブルitem,item_xxxをあわせたparamsを受け取り、複数テーブル同時に更新する
   def save_all(params)
     ActiveRecord::Base.transaction do

@@ -1,10 +1,12 @@
 class Back::PostsController < ApplicationController
   load_and_authorize_resource
-  ITEMS_PER_PAGE = 3
+  ITEMS_PER_PAGE = 5
 
   def index
     @search_params = search_params
-    @posts = current_user.posts.includes(:user)
+          
+    # @posts = current_user.posts.includes(:user)
+    @posts = Post.by_user_role(current_user)
                          .back_search(@search_params)
                          .page(params[:page])
                          .per(ITEMS_PER_PAGE)
