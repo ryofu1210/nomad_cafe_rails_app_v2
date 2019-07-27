@@ -10,22 +10,34 @@
     </div>
     <div class="form-header">
       <div class="row form-group">
-        <label class="col-form-label col-2">店舗名</label>
+        <label 
+          class="col-form-label col-2"
+          for="post_name"
+        >
+        店舗名
+        </label>
         <input 
           type="text" 
           v-model="post.name" 
           class="form-control col-7" 
           maxlength="30"
+          id="post_name"
         >
         <p v-if="name_message" >{{name_message}}</p>
       </div>
       <div class="row form-group">
-        <label class="col-form-label col-2">説明文</label>
+        <label 
+          class="col-form-label col-2"
+          for="post_description"
+        >
+        説明文
+        </label>
         <textarea 
           v-model="post.description" 
           class="form-control col-7"
           rows="3"
           maxlength="150"
+          id="post_description"
         ></textarea>
         <p v-if="description_message" >{{description_message}}</p>
       </div>
@@ -38,6 +50,7 @@
               class="preview-img__file"
               :src="post.image"
               alt=""
+              id="post_image"
             />
           </div>
         </div>
@@ -48,7 +61,9 @@
           <option 
             v-for="area in areas" 
             :value="area.id" 
-            :key="area.id">
+            :key="area.id"
+            :id="`post_area_ids_${area.id}`"
+          >
           {{area.name}}
           </option>
         </select>
@@ -63,6 +78,7 @@
               v-model="selected_tags" 
               :value="tag.id"
               class="form-check-input"
+              :id="`post_tag_ids_${tag.id}`"
             >
             {{tag.name}}
           </label>
