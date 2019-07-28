@@ -67,12 +67,13 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include Devise::Test::IntegrationHelpers, type: :request
-  
+
   # systemテストにおいて、jsありの場合はヘッドレスChrome、
   # jsなしの場合はrack_testを用いてテストする
   config.before(:each) do |example|
     if example.metadata[:type] == :system
       if example.metadata[:js]
+        # driven_by :selenium_chrome_headless, screen_size: [1400, 1400]
         driven_by :selenium_chrome_headless, screen_size: [1400, 1400]
       else
         driven_by :rack_test
