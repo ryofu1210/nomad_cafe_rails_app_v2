@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:role) }
     it { is_expected.to validate_presence_of(:password) }
-    it { is_expected.to define_enum_for(:role).with(%i(user admin)) }
+    it { is_expected.to define_enum_for(:role).with_values(%i(user admin)) }
   end
 
   describe '#already_favorite?' do

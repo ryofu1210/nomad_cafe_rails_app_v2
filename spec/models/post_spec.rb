@@ -13,7 +13,7 @@ RSpec.describe Post, type: :model do
     # it { is_expected.to belong_to(:area) }
     it { is_expected.to accept_nested_attributes_for(:items) }
 
-    it { is_expected.to define_enum_for(:status).with(%i(editing accepted deleted)) }
+    it { is_expected.to define_enum_for(:status).with_values(%i(editing accepted deleted)) }
 
 
     it { is_expected.to validate_presence_of(:name) }
