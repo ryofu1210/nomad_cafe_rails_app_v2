@@ -128,8 +128,8 @@ class Post < ApplicationRecord
           target_id: target.id
         )
       end
-      # byebug
       params[:image] = convert_data_uri_to_upload(params[:image]) if params[:image]
+      # byebug
       update!(params)
       true
     end

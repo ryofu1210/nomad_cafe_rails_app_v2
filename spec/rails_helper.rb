@@ -66,7 +66,8 @@ RSpec.configure do |config|
   # controllerテスト、systemテストでDeviseヘルパーを使用する
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :system
-
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  
   # systemテストにおいて、jsありの場合はヘッドレスChrome、
   # jsなしの場合はrack_testを用いてテストする
   config.before(:each) do |example|

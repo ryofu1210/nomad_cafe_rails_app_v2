@@ -2,7 +2,9 @@
   <div class="item-component-list">
     <!-- <h1>ItemComponentList</h1> -->
     <!-- {{ items }} -->
-    <div class="item-component-list__menu">
+    <div 
+      class="item-component-list__menu"
+    >
       <button 
         @click="handleAdd('heading', totalcount)"
         class="item-component-list__menu-btn menu-add__item_heading"

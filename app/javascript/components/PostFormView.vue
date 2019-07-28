@@ -98,7 +98,10 @@
 
     </div>
 
-    <div class="container-items">
+    <div 
+      class="container-items"
+      v-if="this.$route.params.id"
+    >
       <ItemComponentList :items="items" />
     </div>
     <div class="container-submit">
