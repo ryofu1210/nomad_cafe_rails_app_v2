@@ -22,7 +22,9 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(user_id: current_user.id)
+    # byebug
+    @post = current_user.posts.includes(items: :target).new
+    # logger.byebug("create start")
     # byebug
     if @post.save_all(post_params)
       head :no_content
@@ -96,33 +98,16 @@ class Api::PostsController < ApplicationController
   end
 
   def post_params
-    logger.debug(params.to_s)
+    # logger.debug(params.to_s)
     # logger.debug("#{params.require(:post)}")
     # byebug
 
     params.require(:post).permit(
-      :name,
-      :description,
-      # {image: :url},
-      :image,
-      :status,
-      :area_id,
-      tag_ids: [],
-      # post_tags_attributes: [
-      #   :tag_id, 
-      #   :post_id
-      # ],
-      items_attributes: [
-        :id,
-        :post_id,
-        :sortrank,
-        :target_type,
-        :target_id,
-        :title,
-        :body,
-        # {image: :url}
-        :image
-      ],
+      :name, :description, :image, :status, :area_id, tag_ids: [],
+      items_attributes: [ 
+        :id, :post_id, :sortrank, :target_type,
+        :target_id, :title, :body, :image
+      ]
     )
   end
 end

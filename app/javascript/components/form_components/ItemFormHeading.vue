@@ -1,11 +1,12 @@
 <template>
   <div class="item-form">
-    <p class="item-form__header">見出し</p>
+    <label class="item-form__header" for="item_heading">見出し</label>
     <div class="item-form__content">
       <input 
         type="text" 
         v-model="dataTitle"
         class="item-form__textarea"
+        id="item_heading"
       >
     </div>
     <div class="item-form__message">

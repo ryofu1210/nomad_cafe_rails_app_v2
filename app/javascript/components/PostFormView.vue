@@ -70,15 +70,26 @@
         <p v-if="area_message" > {{ area_message }}</p>
       </div>      
       <ul class="row form-group">
-        <label class="col-form-label col-2">タグ選択</label>
+        <label 
+          class="col-form-label col-2" 
+          for="post[tags]"
+        >
+        タグ選択
+        </label>
         <!-- <li class="mr-3"> -->
-          <label v-for="tag in tags" :key="tag.id" class="form-check-label mr-5">
+          <label 
+            v-for="tag in tags" 
+            :key="tag.id" 
+            class="form-check-label mr-5"
+            :for="`post_tag_ids_${tag.id}`"
+          >
             <input 
               type="checkbox" 
               v-model="selected_tags" 
               :value="tag.id"
               class="form-check-input"
               :id="`post_tag_ids_${tag.id}`"
+              name="post[tags]"
             >
             {{tag.name}}
           </label>
