@@ -27,6 +27,7 @@ executors:
           # MYSQL_DATABASE: wdb-circleci-rails_test
           MYSQL_DATABASE: nomad_cafe_rails_app_v2_test
           MYSQL_ROOT_HOST: '%'
+      - image: selenium/standalone-chrome:latest
     working_directory: ~/repo
 
 
