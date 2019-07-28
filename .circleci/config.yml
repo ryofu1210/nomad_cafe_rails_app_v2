@@ -2,7 +2,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/ruby:2.3.3
+      - image: circleci/ruby:2.4.3-node-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -11,7 +11,7 @@ executors:
     working_directory: ~/repo
   with_db:
     docker:
-      - image: circleci/ruby:2.3.3
+      - image: circleci/ruby:2.4.3-node-browsers
         environment:
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
@@ -45,8 +45,8 @@ jobs:
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      # - restore_cache:
+      #     key: v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: Bundle Install
           command: bundle check || bundle install
