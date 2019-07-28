@@ -1,40 +1,35 @@
 <template>
   <div class="item-form">
     <p class="item-form__header">イメージ</p>
-    <!-- <div class="item-form__content">
-      <div class="item-form__content-imgbox">
-        <img class="item-form__content-img" :src="image.url">
-        <p>{{dataImage.url}}</p>
-      </div>
-      <input 
-        type="file" 
-        class="item-form__file"
-      >
-    </div> -->
-    <div class="item-form__content-imgbox">
-      <label>画像</label>
+    <div class="item-form__content">
       <input type="file" @change="handleUploadFile">
-      <div class="preview-item">
-        <p class="preview-item-name">{{ imageName }}</p>
+      <div class="item-form__imgbox">
+        <!-- <p class="preview-item-name">{{ imageName }}</p> -->
         <img
           v-show="imagePath"
-          class="item-form__content-img"
+          class="item-form__img"
           :src="imagePath"
           alt=""
         />
-        {{imagePath}}
       </div>
+      <p class="item-form__imagePath">URL：{{ imagePath }}</p>
     </div>
-    <div>
+    <div class="item-form__message">
       <p>{{ message }}</p>
     </div>
-    <div>
+    <div class="item-form__btns">
       <button 
         @click="handleUpdate(imagePath, sortrank)"
+        class="item-form__btn-save"
       >
       閉じる
       </button>
-      <button @click="handleCansel(sortrank)">キャンセル</button>
+      <button 
+        @click="handleCansel(sortrank)"
+        class="item-form__btn-cansel"
+      >
+      キャンセル
+      </button>
       <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>

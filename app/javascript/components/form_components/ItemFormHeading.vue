@@ -1,23 +1,30 @@
 <template>
   <div class="item-form">
-    <p class="item-form__header">見出し</p>
+    <label class="item-form__header" for="item_heading">見出し</label>
     <div class="item-form__content">
       <input 
         type="text" 
         v-model="dataTitle"
         class="item-form__textarea"
+        id="item_heading"
       >
     </div>
-    <div>
+    <div class="item-form__message">
       <p>{{ message }}</p>
     </div>
-    <div>
+    <div class="item-form__btns">
       <button 
         @click="handleUpdate(dataTitle, sortrank)"
+         class="item-form__btn-save"
       >
       閉じる
       </button>
-      <button @click="handleCansel(sortrank)">キャンセル</button>
+      <button 
+        @click="handleCansel(sortrank)"
+        class="item-form__btn-cansel"
+      >
+      キャンセル
+      </button>
       <!-- <p>{{dataTitle}}</p> -->
     </div>
   </div>

@@ -1,2 +1,43 @@
-h1 showview
-= @post.name
+- add_breadcrumb "Home", root_path
+- add_breadcrumb "すべて", posts_path
+- add_breadcrumb "#{@area.name}", area_path(@area)
+- add_breadcrumb "#{@post.name}"
+
+section.breadcrumb
+  = render_breadcrumbs separator: ' > ' 
+
+main.post-container[id="post-#{@post.id}"]
+  .post-header
+    .post-img
+      = image_tag @post.image.url, class:"post-img__content"
+    .post-content
+      h1.post-content__title
+        = @post.name
+      span.post-content__area
+        = @post.area.name
+      p.post-content__description
+        = @post.description
+      p.post-content__tags
+        - @tags.each do |tag|
+          .post-content__tag
+            = tag.name
+      .post-content__sideinfo
+        .favo
+          span.favo-icon
+            - if current_user && current_user.already_favorite?(@post.id)
+              = render partial: 'shared/favorite', locals: {post_id: @post.id, user_id: current_user.id}
+            - else
+              = render partial: 'shared/not_favorite', locals: {post_id: @post.id}
+          span.favo-count
+            = @post.favorites.count
+        .post-content__pv
+          span.post-content__pv_icon
+            = fa_icon "eye"
+          span.post-content__pv_count
+            = @post.impressionist_count
+
+
+  .post-items
+    - @items.each do |item|
+      .post-item
+        = render partial: "posts/items/#{item.target_type}", locals: {item: item.target}

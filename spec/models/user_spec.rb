@@ -31,5 +31,26 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#validation' do
+    it { is_expected.to have_many(:posts) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:role) }
+    it { is_expected.to validate_presence_of(:password) }
+    it { is_expected.to define_enum_for(:role).with_values(%i(user admin)) }
+  end
+
+  describe '#already_favorite?' do
+    subject { user.already_favorite?( post_id ) }
+    let(:user) { create(:user) }
+    let(:post) { create(:post) }
+    let(:post_id) { post.id }
+    context 'favorite未登録の場合' do
+      it { is_expected.to be_falsy }
+    end
+
+    context 'favorite登録済みの場合' do
+      let!(:favorite) { create(:favorite, user: user, post: post ) }
+      it { is_expected.to be_truthy }
+    end
+  end
 end

@@ -2,9 +2,28 @@
   <div class="item-component-list">
     <!-- <h1>ItemComponentList</h1> -->
     <!-- {{ items }} -->
-    <button @click="handleAdd('heading', totalcount)">見出し追加</button>
-    <button @click="handleAdd('text', totalcount)">本文追加</button>
-    <button @click="handleAdd('image', totalcount)">画像追加</button>
+    <div 
+      class="item-component-list__menu"
+    >
+      <button 
+        @click="handleAdd('heading', totalcount)"
+        class="item-component-list__menu-btn menu-add__item_heading"
+      >
+      見出し追加
+      </button>
+      <button 
+        @click="handleAdd('text', totalcount)"
+        class="item-component-list__menu-btn menu-add__item_text"
+      >
+      本文追加
+      </button>
+      <button 
+        @click="handleAdd('image', totalcount)"
+        class="item-component-list__menu-btn menu-add__item_image"
+      >
+      画像追加
+      </button>
+    </div>
     <ul>
       <li v-for="(item, index) in items" :key="item.id">
         <ItemComponent :item="item" :sortrank="index" :totalcount="totalcount" />

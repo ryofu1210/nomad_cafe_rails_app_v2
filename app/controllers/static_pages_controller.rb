@@ -1,9 +1,15 @@
 class StaticPagesController < ApplicationController
+  skip_before_action :authenticate_user!
   def home
     @search_params = params.slice(:word)
     @areas = Area.all
-    @featured_posts = FeaturedPost.order(:sortrank).limit(6).map(&:post)
-    @posts = Post.all.limit(5)
-    @popular_posts = Post.popular_posts
+    # byebug
+    @featured_posts = FeaturedPost.order(:sortrank)
+                                  .select { |fp| fp.post.accepted? }
+                                  .map(&:post)
+                                  .take(6)
+    # byebug
+    @posts = Post.active.limit(6)
+    @popular_posts = Post.popular_posts.active.limit(6)
   end
 end

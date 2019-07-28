@@ -14,14 +14,20 @@ ActiveRecord::Base.connection.execute("SET FOREIGN_KEY_CHECKS=1;");
 ActiveRecord::Base.transaction do
   users = []
   posts = []
+  # byebug
 	3.times do |i|
     user = FactoryBot.create(:user)
-    2.times do |j|
-      post = FactoryBot.create(:post, user: user)
-      FactoryBot.create(:item, :heading, sortrank: 1, post: post)
-      FactoryBot.create(:item, :text, sortrank: 2, post: post)
-      FactoryBot.create(:item, :image, sortrank: 3, post: post)
-      posts << post
+    3.times do |j|
+      post1 = FactoryBot.create(:post, user: user)
+      FactoryBot.create(:item, :heading, sortrank: 1, post: post1)
+      FactoryBot.create(:item, :text, sortrank: 2, post: post1)
+      FactoryBot.create(:item, :image, sortrank: 3, post: post1)
+      posts << post1
+      post2 = FactoryBot.create(:post, user: user, status: 0)
+      FactoryBot.create(:item, :heading, sortrank: 1, post: post2)
+      FactoryBot.create(:item, :text, sortrank: 2, post: post2)
+      FactoryBot.create(:item, :image, sortrank: 3, post: post2)
+      posts << post2
     end
     users << user
   end
@@ -32,6 +38,11 @@ ActiveRecord::Base.transaction do
   FactoryBot.create(:featured_post, post: posts[0])
   FactoryBot.create(:featured_post, post: posts[3])
   FactoryBot.create(:featured_post, post: posts[5])
+  FactoryBot.create(:featured_post, post: posts[2])
+  FactoryBot.create(:featured_post, post: posts[8])
+  FactoryBot.create(:featured_post, post: posts[11])
+  # FactoryBot.create(:featured_post, post: posts[9])
+  # FactoryBot.create(:featured_post, post: posts[10])
 
 
   tags = []

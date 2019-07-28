@@ -8,13 +8,6 @@ const routes = [
   path: '/back/posts/:id/edit', 
   component: PostFormView,
   name: 'PostEditView',
-  children: [
-    {
-      path: '/back/posts/preview',
-      component: PostPreviewModal,
-      name: 'PostPreviewModal'
-    }
-  ]
 },
 {
   path: '/back/posts/new', 

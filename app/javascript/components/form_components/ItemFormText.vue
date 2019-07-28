@@ -5,15 +5,26 @@
       <textarea 
         v-model="dataBody"
         class="item-form__textarea"
+        rows="5"
       >
       </textarea>
     </div>
-    <div>
+    <div class="item-form__message">
       <p>{{ message }}</p>
     </div>
-    <div>
-      <button @click="handleUpdate(dataBody, sortrank)">閉じる</button>
-      <button @click="handleCansel(sortrank)">キャンセル</button>
+    <div class="item-form__btns">
+      <button 
+        @click="handleUpdate(dataBody, sortrank)"
+        class="item-form__btn-save"
+      >
+      閉じる
+      </button>
+      <button 
+        @click="handleCansel(sortrank)"
+        class="item-form__btn-cansel"
+      >
+      キャンセル
+      </button>
     </div>
   </div>
 </template>

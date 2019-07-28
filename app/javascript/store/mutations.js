@@ -8,6 +8,9 @@ export default {
     })
     state.items = items
     state.post = payload.post
+    state.areas = payload.areas
+    state.tags = payload.tags
+    // state.status = payload.post.status
   },
   
 
@@ -60,9 +63,13 @@ export default {
   [types.UPDATE_ITEM] (state, payload){
     const {newItem, sortrank} = payload
     console.log(state.items[sortrank])
-    // console.log(value)
     state.items[sortrank] = _.merge(state.items[sortrank], newItem)
-  }
+  },
+
+  [types.UPDATE_STATUS] (state, payload){
+    const status = payload
+    state.post = _.merge( state.post , { status: status } )
+  },
 
 
 }

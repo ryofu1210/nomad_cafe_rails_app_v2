@@ -9,9 +9,8 @@
 #
 
 class Tag < ApplicationRecord
-  has_many :post_tags
+  has_many :post_tags, dependent: :destroy, inverse_of: :tag
   has_many :posts, through: :post_tags
-  
-  validates :name, presence: true
 
+  validates :name, presence: true
 end
