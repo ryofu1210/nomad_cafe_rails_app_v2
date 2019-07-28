@@ -90,6 +90,9 @@ jobs:
           name: データベースセットアップ
           command: bin/rails db:migrate
       - run:
+          name: コンパイル
+          command: bundle exec rails webpacker:compile NODE_ENV=test 
+      - run:
           name: Rspecの実行
           command: bundle exec rspec
   deploy:
