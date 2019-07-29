@@ -1,18 +1,10 @@
-version: 2.1
-executors:
-  default:
+version: 2
+
+jobs:
+  build:
     docker:
-      - image: circleci/ruby:2.3.3
-        environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
-          BUNDLE_PATH: vendor/bundle
-          RAILS_ENV: test
-    working_directory: ~/repo
-  with_db:
-    docker:
-      - image: circleci/ruby:2.3.3
-        environment:
+      - image: circleci/ruby:2.3.3-node-browsers
+        environment: 
           BUNDLE_PATH: vendor/bundle
           RAILS_ENV: test
           MYSQL_HOST: 127.0.0.1
@@ -20,58 +12,37 @@ executors:
           MYSQL_PASSWORD: ''
           MYSQL_PORT: 3306
       - image: circleci/mysql:5.7
-        # command: mysqld --default-authentication-plugin=mysql_native_password
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           # MYSQL_ROOT_PASSWORD: ''
           # MYSQL_DATABASE: wdb-circleci-rails_test
           MYSQL_DATABASE: nomad_cafe_rails_app_v2_test
           MYSQL_ROOT_HOST: '%'
+      - image: node:6.10.0
     working_directory: ~/repo
-
-
-
-jobs:
-  checkout_code:
-    executor: default
     steps:
       - checkout
-      - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - ~/repo
-  bundle_dependencies:
-    executor: default
-    steps:
-      - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Bundle Install
-          command: bundle check || bundle install
+          command: bundle check || bundle install --path vendor/bundle
+      # - run:
+      #     name: install yarn
+      #     command: npm install yarn
+      # - run:
+      #     name: Yarn Install
+      #     command: bundle exec yarn install
       - save_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-  # test_rubocop:
-  #   executor: default
-  #   steps:
-  #     - restore_cache:
-  #       key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-  #     - restore_cache:
-  #       key: v1-bundle-{{ checksum "Gemfile.lock" }}
-  #     - run:
-  #       name: RuboCop
-  #       command: bundle exec rubocop
-  
-  test_rspec:
-    executor: with_db
-    steps:
-      - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - run:
           name: データベースの起動待機
           command: |
@@ -79,49 +50,25 @@ jobs:
             tcp://127.0.0.1:3306 -timeout 120s
       - run: rm ./config/database.yml
       - run: mv ./config/database.yml.ci ./config/database.yml
-      # - run:
-      #     name: データベースセットアップ
-      #     command: bin/rails db:schema:load --trace
       - run:
-          name: データベースセットアップ
+          name: データベースセットアップ（DB作成）
           command: bin/rails db:create
       - run:
-          name: データベースセットアップ
+          name: データベースセットアップ（テーブル作成）
           command: bin/rails db:migrate
+      # - run:
+      #     name: webpackビルド
+      #     command: bundle exec bin/webpack
+      # - run:
+      #     name: コンパイル
+      #     command: bundle exec rails webpacker:compile NODE_ENV=test 
       - run:
           name: Rspecの実行
-          command: bundle exec rspec
-  deploy:
-    docker:
-      - image: cdssnc/aws-cli
-        environment:
-          DEPLOY_APPLICATION: sample-app-codedeploy
-          DEPLOY_GROUP: sample-app-deploy-group
-          DEPLOY_REPOSITORY: ryofu1210/sample_app
-    steps:
-      - run:
-          name: "Set AWS region"
-          command: aws configure set region ap-northeast-1
-      - run:
-          name: "Run AWS CodeDeploy"
-          command: aws deploy create-deployment --application-name ${DEPLOY_APPLICATION} --deployment-group-name ${DEPLOY_GROUP} --github-location repository="${DEPLOY_REPOSITORY}",commitId="${CIRCLE_SHA1}"
+          command: bin/rspec spec/models/ || bin/rspec spec/requests/
 
 
 workflows:
   version: 2
-  build:
-    jobs:
-      - checkout_code
-      - bundle_dependencies:
-          requires:
-            - checkout_code
-      - test_rspec:
-          requires:
-            - bundle_dependencies
-      - deploy:
-          requires:
-            - test_rspec
-          filters:
-            branches:
-              only: master
-
+  build_and_test:
+      jobs:
+        - build
