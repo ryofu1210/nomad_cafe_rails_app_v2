@@ -30,7 +30,7 @@ jobs:
           command: bundle check || bundle install --path vendor/bundle
       - run:
           name: Yarn Install
-          command: yarn install
+          command: bin/yarn install
       - save_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
