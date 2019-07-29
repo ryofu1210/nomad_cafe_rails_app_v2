@@ -18,14 +18,14 @@ jobs:
           # MYSQL_DATABASE: wdb-circleci-rails_test
           MYSQL_DATABASE: nomad_cafe_rails_app_v2_test
           MYSQL_ROOT_HOST: '%'
-      - image: node:6.10.0
+      # - image: node:6.10.0
     working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
-      - restore_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - restore_cache:
+      #     key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Bundle Install
           command: bundle check || bundle install --path vendor/bundle
@@ -39,10 +39,10 @@ jobs:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-      - save_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      # - save_cache:
+      #     key: v1-dependencies-{{ checksum "package.json" }}
+      #     paths:
+      #       - node_modules
       - run:
           name: データベースの起動待機
           command: |
