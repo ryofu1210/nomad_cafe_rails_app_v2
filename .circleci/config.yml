@@ -18,6 +18,7 @@ jobs:
           # MYSQL_DATABASE: wdb-circleci-rails_test
           MYSQL_DATABASE: nomad_cafe_rails_app_v2_test
           MYSQL_ROOT_HOST: '%'
+      - image: node:6.10.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -28,12 +29,12 @@ jobs:
       - run:
           name: Bundle Install
           command: bundle check || bundle install --path vendor/bundle
-      - run:
-          name: npm yarn install
-          command: npm install yarn
-      - run:
-          name: Yarn Install
-          command: bin/yarn install
+      # - run:
+      #     name: install yarn
+      #     command: npm install yarn
+      # - run:
+      #     name: Yarn Install
+      #     command: bundle exec yarn install
       - save_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
@@ -55,15 +56,15 @@ jobs:
       - run:
           name: データベースセットアップ（テーブル作成）
           command: bin/rails db:migrate
-      - run:
-          name: webpackビルド
-          command: bundle exec bin/webpack
+      # - run:
+      #     name: webpackビルド
+      #     command: bundle exec bin/webpack
       # - run:
       #     name: コンパイル
       #     command: bundle exec rails webpacker:compile NODE_ENV=test 
       - run:
           name: Rspecの実行
-          command: bin/rspec
+          command: bin/rspec spec/models/ || bin/rspec spec/requests/
 
 
 workflows:
