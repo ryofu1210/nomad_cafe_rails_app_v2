@@ -53,6 +53,7 @@ gem 'font-awesome-rails'
 gem 'breadcrumbs_on_rails'        # パンくず
 gem "bootstrap", ">= 4.3.1"
 gem 'cancancan'
+gem 'unicorn'
 
 # 矯正ツール
 gem 'rubocop', require: false # Rails校正ツール
