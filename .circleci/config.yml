@@ -29,6 +29,9 @@ jobs:
           name: Bundle Install
           command: bundle check || bundle install --path vendor/bundle
       - run:
+          name: npm yarn install
+          command: npm install yarn
+      - run:
           name: Yarn Install
           command: bin/yarn install
       - save_cache:
