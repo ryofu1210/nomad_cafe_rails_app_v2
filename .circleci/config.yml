@@ -24,7 +24,7 @@ jobs:
       - checkout
       - restore_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
-          key: v1-bundle-
+          # key: v1-bundle-
       # - restore_cache:
       #     key: v1-dependencies-{{ checksum "package.json" }}
       - run:
