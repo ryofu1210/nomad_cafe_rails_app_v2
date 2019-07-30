@@ -2,7 +2,7 @@
   .card-img
     = link_to post_path(post) do
       - if post.image.url.present?
-        = image_tag post.image.url, {class:"card-img__content"}
+        = image_tag post.image.url(:middle), {class:"card-img__content"}
       - else
         img src="/assets/default_image_post.png" class="card-img__content"
   .card-body
