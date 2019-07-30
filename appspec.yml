@@ -1,0 +1,5 @@
+version: 0.0
+os: linux
+files:
+  - source: ./
+    destination:  /var/www/projects/nomad_cafe_rails_app_v2
