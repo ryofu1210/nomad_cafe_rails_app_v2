@@ -1,7 +1,7 @@
 / h1 post index
 section.mainVisual
   .mainVisual-img
-    = image_tag "/assets/top_image280.png", class:"mainVisual-img__content"
+    = image_tag asset_path("top_image280.png"), class:"mainVisual-img__content"
   .mainVisual-inner
     p.mainVisual-description ノマドワーカーにぴったりなカフェがみつかる
     = form_with url: posts_path, method: :get, local: true, class:"search-form" do |f|
