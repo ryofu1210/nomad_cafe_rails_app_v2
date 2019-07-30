@@ -3,3 +3,8 @@ os: linux
 files:
   - source: ./
     destination:  /var/www/projects/nomad_cafe_rails_app_v2
+hooks:
+  AfterInstall:
+    - location: scripts/bundle_install.sh
+      timeout: 300
+      runas: rfujii
