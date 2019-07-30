@@ -5,6 +5,6 @@ files:
     destination:  /var/www/projects/nomad_cafe_rails_app_v2
 hooks:
   AfterInstall:
-    - location: scripts/bundle_install.sh
+    - location: scripts/build_and_restart_server.sh
       timeout: 300
       runas: rfujii
