@@ -20,7 +20,7 @@
           type="text" 
           v-model="post.name" 
           class="form-control col-7" 
-          maxlength="30"
+          maxlength="50"
           id="post_name"
         >
         <p v-if="name_message" >{{name_message}}</p>
