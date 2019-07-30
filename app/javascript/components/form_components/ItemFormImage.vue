@@ -12,7 +12,7 @@
           alt=""
         />
       </div>
-      <p class="item-form__imagePath">URL：{{ imagePath }}</p>
+      <!-- <p class="item-form__imagePath">URL：{{ imagePath }}</p> -->
     </div>
     <div class="item-form__message">
       <p>{{ message }}</p>
