@@ -9,7 +9,8 @@ section.breadcrumb
 main.post-container[id="post-#{@post.id}"]
   .post-header
     .post-img
-      = image_tag @post.image.url, class:"post-img__content"
+      - if @post.image.url.present?
+        = image_tag @post.image.url(:middle), class:"post-img__content"
     .post-content
       h1.post-content__title
         = @post.name
