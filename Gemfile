@@ -54,7 +54,8 @@ gem 'breadcrumbs_on_rails'        # パンくず
 gem "bootstrap", ">= 4.3.1"
 gem 'cancancan'
 gem 'unicorn'
-gem 'fog-aws'
+gem 'fog'
+gem 'dotenv-rails'
 
 # 矯正ツール
 gem 'rubocop', require: false # Rails校正ツール
