@@ -1,6 +1,7 @@
 import client from './client';
 import * as types from './mutation-types';
 import ItemParameter from '../util';
+import router from '../routes';
 
 const actions = {
   fetchAllItems: ({commit},{id})=>{
@@ -65,7 +66,11 @@ const actions = {
     const ItemParams = new ItemParameter(post, items, selected_area, selected_tags)
     const item_params = ItemParams.trim()
     return client.post(`/api/posts.json`, {post: item_params})
-            // .then((res) => commit(types.FETCH_ALL_ITEMS,res.data))
+            .then((res) =>{
+              console.log("create after")
+              console.log(res)
+              router.push({ name:'PostEditView', params: {id: res.data.id }})
+            })
   },
 
   accepted: ({commit},{id})=>{

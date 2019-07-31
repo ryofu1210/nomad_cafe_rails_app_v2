@@ -61,12 +61,12 @@ class Post < ApplicationRecord
   }
   scope :by_name_and_description, ->(word = nil) { where('posts.name LIKE ? OR description LIKE ?', "%#{word}%", "%#{word}%") if word.present? }
 
-  scope :order_by, lambda { |status_order: nil, updated_at_order: nil|
-    return unless status_order || updated_at_order
+  scope :order_by, lambda { |updated_at_order: nil|
+    return unless updated_at_order
 
-    status_sql       = status_order ? "status #{status_order}" : nil
+    # status_sql       = status_order ? "status #{status_order}" : nil
     updated_at_sql   = updated_at_order ? "updated_at #{updated_at_order}" : nil
-    order([status_sql, updated_at_sql].compact.join(','))
+    order([updated_at_sql].compact.join(','))
   }
   # scope :exclude_deleted, -> { where.not(status: 4) }
   scope :by_tag_ids, lambda { |tag_ids = nil|
@@ -85,7 +85,7 @@ class Post < ApplicationRecord
       .by_status(search_params[:status_ids])
       .by_user_name(search_params[:user_name])
       .updated_at_between(from: search_params[:from], to: search_params[:to])
-      .order_by(status_order: search_params[:status_order], updated_at_order: search_params[:updated_at_order])
+      .order_by(updated_at_order: search_params[:updated_at_order])
     # byebug
   }
 
