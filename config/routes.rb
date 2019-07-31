@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get '/health_check', to: 'application#health_check'
+
   root 'static_pages#home'
   # root 'posts#index'
   resources :posts, only: %w(index show) do
