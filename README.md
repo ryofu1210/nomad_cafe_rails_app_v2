@@ -58,7 +58,8 @@ Post-Items-ItemHeading
           -
 ユーザの新規投稿画面、編集画面にはVue.jsを用いています。
 
-[erd.pdf](https://github.com/ryofu1210/nomad_cafe_rails_app_v2/files/3452478/erd.pdf)
+![erd](https://user-images.githubusercontent.com/40624966/62222573-8cf58600-b3ee-11e9-9666-8dc126ea5a1e.png)
+
 
 # テスト
 - RSpec
