@@ -62,28 +62,6 @@ Post投稿では「見出し」「画像」「本文」という３つのアイ�
 
 さらに、「Item」モデルでは、見出しを表す「ItemHeading」モデル、本文を表す「ItemText」モデル、画像を表す「ItemImage」モデルとポリモーフィック関連で紐づけています。
 
-```
-class Post < ApplicationRecord
-    has_many :items
-end
-
-class Item < ApplicationRecord
-    belongs_to :post
-    belongs_to :target, polymorphic: true
-end
-
-class ItemHeading < ApplicationRecord
-    has_one :item, as: :target
-end
-
-class ItemText < ApplicationRecord
-    has_one :item, as: :target
-end
-
-class ItemImage < ApplicationRecord
-    has_one :item, as: :target
-end
-```
 <img width="1158" alt="スクリーンショット 2019-07-31 23 57 02" src="https://user-images.githubusercontent.com/40624966/62222826-f5446780-b3ee-11e9-88be-2a72d440d3ad.png">
 
 # テスト
