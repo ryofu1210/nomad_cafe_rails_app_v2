@@ -40,7 +40,7 @@ class Back::PostsController < ApplicationController
     # byebug
     search_params = params.fetch(:post, {})
                           .permit(:id, :name, :user_name, { status_ids: [] },
-                                  :from, :to, :updated_at_order, :status_order)
+                                  :from, :to, :updated_at_order)
     # .reject {|k,v| v.blank?}
     # byebug
     # 以前の検索条件がセッションに残っていれば引き継ぐ

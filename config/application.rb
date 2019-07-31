@@ -27,5 +27,7 @@ module NomadCafeRailsAppV2
                        helper_specs: false,
                        routing_specs: false
     end
+    #フォームエラー発生時にfield_with_errorをはき出さないようにする
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end

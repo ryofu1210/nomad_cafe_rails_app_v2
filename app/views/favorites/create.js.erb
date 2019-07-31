@@ -1,3 +1,3 @@
-$("#post-<%= @favorite.post_id %> .favo-icon").html("<%= j (render partial:'shared/favorite', locals: { post_id: @favorite.post_id, user_id: @favorite.user_id }) %>");
+$("#post-<%= @favorite.post_id %> .icon-favo__view").html("<%= j (render partial:'shared/favorite', locals: { post_id: @favorite.post_id, user_id: @favorite.user_id }) %>");
 
-$("#post-<%= @favorite.post_id %> .favo-count").html("<%= @favorite.post.favorites.count %>");
+$("#post-<%= @favorite.post_id %> .icon-favo__count").html("<%= @favorite.post.favorites.count %>");

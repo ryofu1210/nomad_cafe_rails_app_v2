@@ -16,14 +16,16 @@
         >
         店舗名
         </label>
-        <input 
-          type="text" 
-          v-model="post.name" 
-          class="form-control col-7" 
-          maxlength="50"
-          id="post_name"
-        >
-        <p v-if="name_message" >{{name_message}}</p>
+        <div class="col-7">
+          <input 
+            type="text" 
+            v-model="post.name"
+            class="form-control"
+            maxlength="50"
+            id="post_name"
+          >
+          <p v-if="name_message" >{{name_message}}</p>
+        </div>
       </div>
       <div class="row form-group">
         <label 
@@ -32,14 +34,17 @@
         >
         説明文
         </label>
-        <textarea 
-          v-model="post.description" 
-          class="form-control col-7"
-          rows="3"
-          maxlength="150"
-          id="post_description"
-        ></textarea>
-        <p v-if="description_message" >{{description_message}}</p>
+        <div class="col-7">
+          <textarea 
+            v-model="post.description" 
+            class="form-control"
+            rows="3"
+            maxlength="150"
+            id="post_description"
+          >
+          </textarea>
+          <p v-if="description_message" >{{description_message}}</p>
+        </div>
       </div>
       <div class="header-image__box row form-group">
         <label class="col-form-label col-2">画像</label>
@@ -105,22 +110,23 @@
       <ItemComponentList :items="items" />
     </div>
     <div class="container-submit">
-      <button 
-        v-if="post.status == 'accepted'"
-        class="container-submit__button"
-        @click="handlePublish(post)"
-      >
-      非公開にする
-      </button>
+      <div v-if="this.$route.params.id" >
+        <button 
+          v-if="post.status == 'accepted'"
+          class="container-submit__button"
+          @click="handlePublish(post)"
+        >
+        非公開にする
+        </button>
 
-      <button 
-        v-else-if="post.status == 'editing'"
-        class="container-submit__button"
-        @click="handlePublish(post)"
-      >
-      公開にする
-      </button>
-
+        <button 
+          v-else-if="post.status == 'editing'"
+          class="container-submit__button"
+          @click="handlePublish(post)"
+        >
+        公開にする
+        </button>
+      </div>
       <button 
         class="container-submit__button"
         @click="handleSubmit(post, items, selected_area, selected_tags)"
@@ -303,11 +309,11 @@ export default {
 
     canSave(){
       let error_count = 0
-      if(this.post.name.length == 0){
+      if(!this.post.name){
         this.name_message = '店名は必ず入力してください。'
         error_count += 1
       }
-      if(this.post.description.length == 0){
+      if(!this.post.description){
         this.description_message = '説明文は必ず入力してください。'
         error_count += 1
       }

@@ -27,7 +27,8 @@ class Api::PostsController < ApplicationController
     # logger.byebug("create start")
     # byebug
     if @post.save_all(post_params)
-      head :no_content
+      # head :no_content
+      render json: { id: @post.id }
     else
       render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
     end

@@ -1,0 +1,40 @@
+
+.icon-list{
+  display:flex;
+}
+
+.icon-list.position-right{
+  position: absolute;
+  bottom:10px;
+  right:10px;
+}
+
+
+.icon-favo{
+
+  .icon-favo__view{
+    .active{
+      color:red;
+    }
+    .noactive{
+      color: black;
+    }  
+  }
+
+
+  .icon-favo__count{
+    margin-left:5px;
+  }
+}
+
+.icon-pv{
+  margin-left:10px;
+
+  .icon-pv__view{
+
+  }
+
+  .icon-pv__count{
+    margin-left:5px;
+  }
+}
