@@ -42,7 +42,7 @@ http://nomad-cafe.tokyo
 - Nginx
 
 # クラウドアーキテクチャ
-![sendgrid](https://user-images.githubusercontent.com/40624966/62219994-43a33780-b3ea-11e9-8813-8c5cb6a2a444.png)
+![Untitled Diagram (1)](https://user-images.githubusercontent.com/40624966/62220185-97ae1c00-b3ea-11e9-9f9a-a43b9354a071.png)
 WebアプリケーションはEC2、RDSの1台ずつの構成です。RedisはEC2インスタンス上にRedisサーバを起動して使用しています。
 CI/CDは、githubのmasterブランチへのマージをトリガーに、CircleCIからCodeDeployを呼び出し、CodeDeploy経由でEC2インスタンスへ自動デプロイを行っています。
 
