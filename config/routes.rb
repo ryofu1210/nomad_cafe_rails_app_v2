@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/health_check', to: 'application#health_check'
+  get '/health_check', to: 'static_pages#health_check'
 
   root 'static_pages#home'
   # root 'posts#index'
