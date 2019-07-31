@@ -1,8 +1,10 @@
 
 .card-list{
   display:flex;
+  display: -webkit-flex;
   margin: 20px;
   flex-wrap:wrap;
+  -webkit-flex-wrap:wrap;
 }
 
 .card{
@@ -40,6 +42,7 @@
 }
 .card-horizontal{
   display: flex;
+  display: -webkit-flex;
   margin: 0 0 16px 0;
   border: 1px solid #e5e5e5;
   padding:16px;
