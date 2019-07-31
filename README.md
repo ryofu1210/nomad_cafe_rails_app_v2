@@ -56,21 +56,23 @@ CI/CDは、githubのmasterブランチへのマージをトリガーに、Circle
 class Post < ApplicationRecord
     has_many :items
 end
+
 class Item < ApplicationRecord
     belongs_to :post
     belongs_to :target, polymorphic: true
 end
+
 class ItemHeading < ApplicationRecord
     has_one :item, as: :target
 end
+
 class ItemText < ApplicationRecord
     has_one :item, as: :target
 end
+
 class ItemImage < ApplicationRecord
     has_one :item, as: :target
 end
-
-
 ```
 
 投稿に「見出し」「画像」「本文」という３つのアイテムを任意の個数、任意の順番で登録できるように、データベースのテーブルを以下のポリモーフィックを用いた構成にしました。
