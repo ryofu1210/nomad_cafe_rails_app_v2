@@ -58,8 +58,7 @@ Post-Items-ItemHeading
           -
 ユーザの新規投稿画面、編集画面にはVue.jsを用いています。
 
-![erd](https://user-images.githubusercontent.com/40624966/62222573-8cf58600-b3ee-11e9-9666-8dc126ea5a1e.png)
-
+<img width="1158" alt="スクリーンショット 2019-07-31 23 57 02" src="https://user-images.githubusercontent.com/40624966/62222826-f5446780-b3ee-11e9-88be-2a72d440d3ad.png">
 
 # テスト
 - RSpec
