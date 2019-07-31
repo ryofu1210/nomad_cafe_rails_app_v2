@@ -1,2 +1,2 @@
-$("#post-<%= @favorite.post_id %> .favo-icon").html("<%= j (render partial:'shared/not_favorite', locals: {post_id: @favorite.post_id}) %>");
-$("#post-<%= @favorite.post_id %> .favo-count").html("<%= @favorite.post.favorites.count %>");
+$("#post-<%= @favorite.post_id %> .icon-favo__view").html("<%= j (render partial:'shared/not_favorite', locals: {post_id: @favorite.post_id}) %>");
+$("#post-<%= @favorite.post_id %> .icon-favo__count").html("<%= @favorite.post.favorites.count %>");
