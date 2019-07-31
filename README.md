@@ -1,4 +1,5 @@
 # 東京ノマドカフェ
+
 PC作業が捗る、Wifi・コンセント・長時間居座り可のおすすめカフェをまとめたWebサービスです。転職活動用に制作しました。
 
 # テストユーザ
@@ -10,12 +11,12 @@ http://nomad-cafe.tokyo
 
 # 使用技術
 - Ruby 2.3.3
-- Rails(5.2)
+- Ruby on Rails 5.2.3
 - Vue.js 3.8.2
   - VueRouter
   - Vuex
   - axios
-- Redis
+- Redis 3.2.12
 - MySQL 5.7
 - Rspec
 - AWS
