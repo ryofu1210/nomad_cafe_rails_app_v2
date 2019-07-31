@@ -9,6 +9,8 @@ header.header
       li.header-nav__item
         = link_to '投稿一覧', back_posts_path
       li.header-nav__item
+        = link_to 'アカウント情報変更', edit_user_registration_path
+      li.header-nav__item
         = link_to 'ログアウト', destroy_user_session_path, method: :delete
     - else
       li.header-nav__item
