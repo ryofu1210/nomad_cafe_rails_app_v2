@@ -5,7 +5,7 @@
     .row
       = form_with scope: :post, url: back_posts_path, method: :get, local: true, class:"admin-search-form" do |f|
         .form-group.row
-          = f.label :id, class: "col-form-label col-2"
+          = f.label :id, "ID",class: "col-form-label col-2"
           = f.text_field :id, value: @search_params[:id], class: "form-control col-6"
         .form-group.row
           = f.label :name, "店名", class: "col-form-label col-2"
@@ -51,7 +51,11 @@
               td = post.status_i18n
               td = post.id
               td = post.name
-              td = post.user.nickname
+              td
+                - if post.user.nickname.present?
+                  = post.user.nickname
+                - else
+                  = "NO NAME"
               td = simple_time(post.updated_at)
               td = link_to '編集', edit_back_post_path(post)
               td = link_to '削除', back_post_path(post), method: :delete, data: { confirm: "Are you sure?" }

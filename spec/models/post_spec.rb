@@ -362,21 +362,21 @@ RSpec.describe Post, type: :model do
 
 
   describe '#order_by' do
-    subject { Post.order_by(status_order: status, updated_at_order: updated_at).map(&:id) }
+    subject { Post.order_by(updated_at_order: updated_at).map(&:id) }
     shared_examples '適した並び順で記事IDをかえす' do
       it { is_expected.to eq result }
     end
 
-    context 'status_orderだけある場合' do
-      let!(:post1) { create(:post, status: 'editing') }
-      let!(:post2) { create(:post, status: 'deleted') }
-      let!(:post3) { create(:post, status: 'accepted') }
+    # context 'status_orderだけある場合' do
+    #   let!(:post1) { create(:post, status: 'editing') }
+    #   let!(:post2) { create(:post, status: 'deleted') }
+    #   let!(:post3) { create(:post, status: 'accepted') }
 
-      let(:status) { 'desc' }
-      let(:updated_at) { nil }
-      let(:result) { [post2.id, post3.id, post1.id] }
-      it_behaves_like '適した並び順で記事IDをかえす'
-    end
+    #   let(:status) { 'desc' }
+    #   let(:updated_at) { nil }
+    #   let(:result) { [post2.id, post3.id, post1.id] }
+    #   it_behaves_like '適した並び順で記事IDをかえす'
+    # end
 
     context 'updated_at_orderだけある場合' do
       let!(:post1) { create(:post, updated_at: Time.current) }
@@ -388,16 +388,16 @@ RSpec.describe Post, type: :model do
       it_behaves_like '適した並び順で記事IDをかえす'
     end
 
-    context 'status_orderとupdated_at_orderの両方ある場合' do
-      let!(:post1) { create(:post, status: 'deleted') }
-      let!(:post2) { create(:post, status: 'accepted', updated_at: Time.current) }
-      let!(:post3) { create(:post, status: 'accepted', updated_at: Time.current + 1.day) }
-      let!(:post4) { create(:post, status: 'accepted', updated_at: Time.current - 1.day) }
-      let(:status) { 'desc' }
-      let(:updated_at) { 'asc' }
-      let(:result) { [post1.id, post4.id, post2.id, post3.id] }
-      it_behaves_like '適した並び順で記事IDをかえす'
-    end
+    # context 'status_orderとupdated_at_orderの両方ある場合' do
+    #   let!(:post1) { create(:post, status: 'deleted') }
+    #   let!(:post2) { create(:post, status: 'accepted', updated_at: Time.current) }
+    #   let!(:post3) { create(:post, status: 'accepted', updated_at: Time.current + 1.day) }
+    #   let!(:post4) { create(:post, status: 'accepted', updated_at: Time.current - 1.day) }
+    #   let(:status) { 'desc' }
+    #   let(:updated_at) { 'asc' }
+    #   let(:result) { [post1.id, post4.id, post2.id, post3.id] }
+    #   it_behaves_like '適した並び順で記事IDをかえす'
+    # end
   end
 
   describe '#back_search' do

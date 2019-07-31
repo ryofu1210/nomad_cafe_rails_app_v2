@@ -132,25 +132,10 @@ RSpec.describe "Api::Postsontroller", type: :request do
       let(:user) { create(:user) }
       let(:area) { Area.first }
       let!(:tags) { create_list(:tag, 3) }
-      # let(:items_attributes) {[ 
-      #   {
-      #     "target_type"=> "ItemHeading",
-      #     "sortrank"=> 1,
-      #     "title"=> "title",
-      #     # "target_attributes" => {
-      #     # }
-      #   },
-      #   {
-      #     "target_type"=> "ItemText",
-      #     "sortrank"=> 2,
-      #     "body"=> "body",
-      #     # "target_attributes" => {
-      #     # }
-      #   },
-      # ]}
 
       context '保存に成功する場合' do
-        subject { response.status }
+        # subject { response.status }
+        subject { JSON.parse(response.body)["id"] }
         let(:result) { 204 }
         let(:params){
           {
@@ -164,11 +149,12 @@ RSpec.describe "Api::Postsontroller", type: :request do
             }
           }
         }
-        it '204ステータスを取得' do
+        it '保存したpostのIDを取得' do
           sign_in(user)
           post api_posts_path, { params: params }
           expect(Post.count).to eq 1
-          expect(subject).to eq result
+          # byebug
+          expect(subject).to be_present
         end
       end
 
