@@ -22,6 +22,10 @@
     .row.mt-5
       .col-6.offset-3
         h2.Title.mb-3 ログイン
+        .testuser
+          h3.testuser-title テストユーザ
+          p.testuser-email email　　：test@example.com
+          p.testuser-password パスワード：password
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
           .form-group.row
             = f.label :email, class: "col-form-label col-4"
