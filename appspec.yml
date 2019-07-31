@@ -7,12 +7,12 @@ hooks:
   ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 300
-      runas: root
+      runas: rfujii
   AfterInstall:
     - location: scripts/bundle_install.sh
       timeout: 300
-      runas: root
+      runas: rfujii
   ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 300
-      runas: root
+      runas: rfujii
