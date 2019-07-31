@@ -69,34 +69,3 @@
     background-color:red;
   }
 }
-
-.header{
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: flex-start;
-  // flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  // background-color: #00a680;
-  padding:5px 50px;
-  min-width:1024px;
-  height:60px;
-  font-size: 20px;
-  box-shadow:0 1px 5px rgba(0,0,0,.2);
-
-  .header-logo{
-    // width:300px;
-    text-align:center;
-  }
-
-  .header-nav{
-    display: -webkit-flex;
-    display:flex;
-    // width:200px;
-
-    .header-nav__item{
-      margin-left:15px;
-
-    }
-  }
-}

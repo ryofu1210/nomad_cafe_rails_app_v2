@@ -1,0 +1,32 @@
+
+.footer{
+  min-width:1140px;
+  background:#ddd;
+  margin-top:120px;
+
+  .footer-nav{
+    max-width:1108px;
+    margin:0 auto;
+    padding:40px 0;
+
+    .footer-nav__title{
+      font-size:20px;
+      // color:#fff;
+      margin-bottom:10px;
+    }
+    
+    .footer-nav__list{
+      .footer-nav__item{
+        margin-bottom:5px;
+        a{
+          // color:#fff;
+        }
+        &::before{
+          content:">";
+          // color:#fff;
+          padding-right:8px;
+        }
+      }
+    }
+  }
+}
