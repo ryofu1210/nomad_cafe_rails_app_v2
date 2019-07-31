@@ -52,6 +52,13 @@ CI/CDは、githubのmasterブランチへのマージをトリガーに、Circle
 
 # Vue.jsを使った投稿編集機能
 ![投稿編集画面サンプル動画 mov](https://user-images.githubusercontent.com/40624966/62218655-d8f0fc80-b3e7-11e9-93dc-3bf56d9fb568.gif)
+
+ユーザの新規投稿画面、編集画面にはVue.jsを用いています。
+
+Post投稿では「見出し」「画像」「本文」という３つのアイテムを任意の個数、任意の順番で登録可能です。
+データベースでは、1つの投稿を表す「Post」モデルに対して、投稿内の各要素を表す「Item」をhas_manyで関連付け、
+「Item」では、見出しを表す「ItemHeading」、本文を表す「ItemText」、画像を表す「ItemImage」とポリモーフィック関連で紐づけています。
+
 ```
 class Post < ApplicationRecord
     has_many :items
@@ -74,13 +81,6 @@ class ItemImage < ApplicationRecord
     has_one :item, as: :target
 end
 ```
-
-投稿に「見出し」「画像」「本文」という３つのアイテムを任意の個数、任意の順番で登録できるように、データベースのテーブルを以下のポリモーフィックを用いた構成にしました。
-
-Post-Items-ItemHeading
-          -
-ユーザの新規投稿画面、編集画面にはVue.jsを用いています。
-
 <img width="1158" alt="スクリーンショット 2019-07-31 23 57 02" src="https://user-images.githubusercontent.com/40624966/62222826-f5446780-b3ee-11e9-88be-2a72d440d3ad.png">
 
 # テスト
