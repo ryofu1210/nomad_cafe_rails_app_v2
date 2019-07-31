@@ -33,3 +33,8 @@ http://nomad-cafe.tokyo
 
 # クラウドアーキテクチャ
 ![Untitled Diagram](https://user-images.githubusercontent.com/40624966/62217259-4b141200-b3e5-11e9-82fc-21d2f422125e.png)
+WebアプリケーションはEC2、RDSの1台ずつの構成です。RedisはEC2インスタンス上にRedisサーバを起動して使用しています。
+CI/CDは、githubのmasterブランチへのマージをトリガーに、CircleCIからCodeDeployを呼び出し、CodeDeploy経由でEC2インスタンスへ自動デプロイを行っています。
+
+画像ファイルはEC2上のRailsアプリケーションからS3へ保存、S3からコンテンツ配信をしています。
+
