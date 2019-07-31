@@ -42,11 +42,12 @@ http://nomad-cafe.tokyo
 - Nginx
 
 # クラウドアーキテクチャ
-![Untitled Diagram](https://user-images.githubusercontent.com/40624966/62217259-4b141200-b3e5-11e9-82fc-21d2f422125e.png)
+![sendgrid](https://user-images.githubusercontent.com/40624966/62219994-43a33780-b3ea-11e9-8813-8c5cb6a2a444.png)
 WebアプリケーションはEC2、RDSの1台ずつの構成です。RedisはEC2インスタンス上にRedisサーバを起動して使用しています。
 CI/CDは、githubのmasterブランチへのマージをトリガーに、CircleCIからCodeDeployを呼び出し、CodeDeploy経由でEC2インスタンスへ自動デプロイを行っています。
 
 画像ファイルはEC2上のRailsアプリケーションからS3へ保存、S3からCDN配信をしています。
+メール配信には、SMTPサーバとして外部サービスであるSendGridを使用しています。
 
 # Vue.jsを使った投稿編集機能
 ![投稿編集画面サンプル動画 mov](https://user-images.githubusercontent.com/40624966/62218655-d8f0fc80-b3e7-11e9-93dc-3bf56d9fb568.gif)
