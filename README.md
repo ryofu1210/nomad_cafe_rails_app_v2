@@ -38,3 +38,6 @@ CI/CDは、githubのmasterブランチへのマージをトリガーに、Circle
 
 画像ファイルはEC2上のRailsアプリケーションからS3へ保存、S3からコンテンツ配信をしています。
 
+# Vue.jsを使った投稿編集機能
+![投稿編集画面サンプル動画 mov](https://user-images.githubusercontent.com/40624966/62218655-d8f0fc80-b3e7-11e9-93dc-3bf56d9fb568.gif)
+
