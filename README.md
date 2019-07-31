@@ -1,13 +1,34 @@
-# nomad_cafe_rails_app
-PC作業が捗る、おすすめカフェがわかるアプリ
-「東京ノマドカフェ」ver2
+# 東京ノマドカフェ
+PC作業が捗る、Wifi・コンセント・長時間居座り可のおすすめカフェをまとめたWebサービスです。転職活動用に制作しました。
 
-## 使用技術
-- フレームワーク：Rails(5.2) / Vue.js
-- コンテンツ配信：AWS S3
-- 本番環境：AWS EC2 / AWS RDS
-- CI/CD：CircleCI
-- データベース：MySQL、Redis
-- プロジェクト管理：github
-- SMTPサーバ：SendGrid
-- テストフレームワーク：Rspec
+# テストユーザ
+- email:test@example.com
+- password：password
+
+# リンク
+http://nomad-cafe.tokyo
+
+# 使用技術
+- Ruby 2.3.3
+- Rails(5.2)
+- Vue.js 3.8.2
+  - VueRouter
+  - Vuex
+  - axios
+- Redis
+- MySQL 5.7
+- Rspec
+- AWS
+  - S3
+  - EC2
+  - VPC
+  - RDS for MySQL
+  - CodeDeploy
+  - Route53
+- CircleCI
+- github
+- SendGrid
+- Unicorn
+- Nginx
+
+# クラウドアーキテクチャ
