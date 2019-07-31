@@ -12,4 +12,8 @@ class StaticPagesController < ApplicationController
     @posts = Post.active.limit(6)
     @popular_posts = Post.popular_posts.active.limit(6)
   end
+
+  def health_check
+    render plain:"ok", status: :ok
+  end
 end

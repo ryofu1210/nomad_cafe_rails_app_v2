@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %w(render_404)
+  protect_from_forgery with: :exception
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from ActiveHash::RecordNotFound, with: :render_404
 
@@ -18,7 +19,4 @@ class ApplicationController < ActionController::Base
     @current_ability ||= Ability.new(current_user)
   end
 
-  def health_check
-    render text:  'ok', status: :ok
-  end
 end
