@@ -14,7 +14,6 @@ class PostsController < ApplicationController
 
   def area_index
     @area = Area.find(params[:id])
-    # fail ActiveRecord::RecordNotFound if @area.blank?
 
     set_common_data
     @posts = Post.where(area_id: @area.id).user_search(@search_params).active

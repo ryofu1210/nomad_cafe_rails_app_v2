@@ -95,37 +95,16 @@ class Api::PostsController < ApplicationController
 
   def set_post
     @post = Post.includes(items: :target).find(params[:id])
-    # byebug
   end
 
   def post_params
-    # logger.debug(params.to_s)
-    # logger.debug("#{params.require(:post)}")
-    # byebug
 
     params.require(:post).permit(
       :name, :description, :image, :status, :area_id, tag_ids: [],
       items_attributes: [ 
         :id, :post_id, :sortrank, :target_type, :target_id, 
         :title, :body, :image
-        # target_attributes: [
-        #   :title, :body, :image
-        # ]
       ]
     )
-    # return permited_params if permited_params[:items_attributes].blank?
-    # permited_params[:items_attributes] = permited_params[:items_attributes].map.with_index do |item,index|
-    #   case item[:target_type]
-    #   when 'ItemHeading'
-    #     # byebug
-    #     item.merge!( { title: params[:post][:items_attributes][index][:title]} )
-    #   when 'ItemText'
-    #     item.merge!( { body:  params[:post][:items_attributes][index][:body]} )
-    #   when 'ItemImage'
-    #     item.merge!( { image: params[:post][:items_attributes][index][:image]} )
-    #   end
-    #   item.to_h
-    # end
-    # byebug
   end
 end
