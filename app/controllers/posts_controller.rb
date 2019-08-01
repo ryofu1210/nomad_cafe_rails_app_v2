@@ -7,8 +7,12 @@ class PostsController < ApplicationController
 
   def index
     set_common_data
-    @posts = Post.user_search(@search_params).active
-                 .page(params[:page]).per(ITEMS_PER_PAGE)
+    @posts = Post.includes(:tags)
+                  .user_search(@search_params)
+                  .active
+                  .page(params[:page])
+                  .per(ITEMS_PER_PAGE)
+    # byebug
     return render status: 404 if @posts.blank?
   end
 
@@ -16,8 +20,12 @@ class PostsController < ApplicationController
     @area = Area.find(params[:id])
 
     set_common_data
-    @posts = Post.where(area_id: @area.id).user_search(@search_params).active
-                 .page(params[:page]).per(ITEMS_PER_PAGE)
+    @posts = Post.includes(:tags)
+                 .where(area_id: @area.id)
+                 .user_search(@search_params)
+                 .active
+                 .page(params[:page])
+                 .per(ITEMS_PER_PAGE)
     return render action: :index, status: 404 if @posts.blank?
 
     render action: :index
@@ -29,7 +37,7 @@ class PostsController < ApplicationController
     @post = Post.active.find(params[:id])
     @tags = @post.tags
     @area = @post.area
-    @items = @post.items
+    @items = @post.items.includes(:target)
     impressionist(@post, nil, unique: [:session_hash])
   end
 
