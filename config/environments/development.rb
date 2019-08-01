@@ -60,4 +60,14 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :letter_opener_web
+
+  # N+1問題検出Gem bullet用の設定
+  config.after_initialize do
+    Bullet.enable = true # bullet を有効にする
+    Bullet.alert         = true # ブラウザのJavaScriptアラート
+    Bullet.bullet_logger = false # Rails.root/log/bullet.log
+    Bullet.console       = false # ブラウザの console.log の出力先
+    Bullet.rails_logger = false # Railsのログ
+    Bullet.add_footer   = false # 画面の下部に表示
+  end
 end

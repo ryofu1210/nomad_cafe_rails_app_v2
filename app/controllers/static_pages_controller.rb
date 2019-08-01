@@ -4,7 +4,8 @@ class StaticPagesController < ApplicationController
     @search_params = params.slice(:word)
     @areas = Area.all
     # byebug
-    @featured_posts = FeaturedPost.order(:sortrank)
+    @featured_posts = FeaturedPost.includes(:post)
+                                  .order(:sortrank)
                                   .select { |fp| fp.post.accepted? }
                                   .map(&:post)
                                   .take(6)
