@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
 
   def render_404(exception = nil)
     logger.info "Rendering 404 with exception: #{exception.message}" if exception
-    # set_view_path
     render template: 'errors/error_404', status: 404
   end
 

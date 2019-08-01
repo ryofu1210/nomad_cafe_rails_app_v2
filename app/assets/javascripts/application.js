@@ -29,17 +29,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
   if(el != null) {
     el.addEventListener("change", ()=>{
       const value = el.value;
-      // const log = `選択されているのは${value}です`;
-      // alert(`${value}`);
-      // debugger;
-      // const current_host = window.location.host;
       const next_pathname = `/areas/${value}`;
-      // const next_href = current_host + next_pathname
-      // location.search = "";
-      // location.pathname = next_pathname;
       location.href = next_pathname;
-      // console.log(`${next_href}`);
-      // console.log(`${window.location.href}`);
     })
   }
 })

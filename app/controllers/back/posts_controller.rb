@@ -41,8 +41,6 @@ class Back::PostsController < ApplicationController
     search_params = params.fetch(:post, {})
                           .permit(:id, :name, :user_name, { status_ids: [] },
                                   :from, :to, :updated_at_order)
-    # .reject {|k,v| v.blank?}
-    # byebug
     # 以前の検索条件がセッションに残っていれば引き継ぐ
     if session[:search_params]
       session[:search_params] = session[:search_params].merge(search_params)
@@ -51,8 +49,6 @@ class Back::PostsController < ApplicationController
       session[:search_params] = search_params
     end
     session[:search_params].reject { |_k, v| v.blank? }.try(:symbolize_keys).presence || {}
-    # logger.debug(session[:search_params])
-    # return session[:search_params]
   end
 
   def post_params; end
