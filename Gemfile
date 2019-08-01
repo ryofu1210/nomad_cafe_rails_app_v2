@@ -41,7 +41,6 @@ gem 'cancancan'
 gem 'unicorn'
 gem 'fog'
 gem 'dotenv-rails'
-
 # 矯正ツール
 gem 'rubocop', require: false # Rails校正ツール
 
@@ -71,6 +70,7 @@ group :development do
   gem 'letter_opener_web'
   gem 'spring-commands-rspec'
   gem 'rails-erd'
+  gem 'bullet'
 end
 
 group :test do

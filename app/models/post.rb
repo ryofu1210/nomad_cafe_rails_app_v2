@@ -53,7 +53,7 @@ class Post < ApplicationRecord
     includes(:user).references(:user).where('users.nickname LIKE ?', "%#{user_name}%") if user_name.present?
   }
   scope :updated_at_between, lambda { |from: nil, to: nil|
-    return unless from || to
+    return self unless from || to
     return where('updated_at >= ?', from) unless to
     return where('updated_at <= ?', to) unless from
 

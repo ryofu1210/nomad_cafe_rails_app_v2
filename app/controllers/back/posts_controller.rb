@@ -6,7 +6,8 @@ class Back::PostsController < ApplicationController
     @search_params = search_params
           
     # @posts = current_user.posts.includes(:user)
-    @posts = Post.by_user_role(current_user)
+    @posts = Post.includes(:user)
+                         .by_user_role(current_user)
                          .back_search(@search_params)
                          .page(params[:page])
                          .per(ITEMS_PER_PAGE)
