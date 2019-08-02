@@ -6,21 +6,19 @@ class FavoritesController < ApplicationController
     # byebug
     @favorite = current_user.favorites.new(post_id: params[:post_id])
     if @favorite.save
-      # flash[:notice] = "お気に入り登録が完了しました。"
-      # redirect_back(fallback_location: root_path)
+      logger.info("post(id:#{@favorite.post_id})のお気に入り登録に成功しました。")
     else
-      flash[:alert] = 'お気に入り登録が失敗しました。'
-      redirect_back(fallback_location: root_path)
+      logger.info("post(id:#{@favorite.try(:post_id)})のお気に入り失敗しました。")
     end
   end
 
   def destroy
     @favorite = Favorite.find_by(post_id: params[:post_id], user_id: params[:id])
     if @favorite.destroy
+      logger.info("post(id:#{@favorite.post_id})のお気に入り削除に成功しました。")
     else
+      logger.info("post(id:#{@favorite.try(:post_id)})のお気に入り削除に失敗しました。")
     end
-    # flash[:notice] = "お気に入りから外しました。"
-    # redirect_back(fallback_location: root_path)
   end
 
   private
@@ -28,7 +26,6 @@ class FavoritesController < ApplicationController
   def correct_user
     favorite = Favorite.find_by(post_id: params[:post_id], user_id: params[:id])
     unless favorite.user == current_user
-      flash[:alert] = '権限がありません'
       redirect_back(fallback_location: root_path)
     end
   end
