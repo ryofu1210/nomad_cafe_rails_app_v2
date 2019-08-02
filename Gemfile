@@ -41,9 +41,8 @@ gem 'cancancan'
 gem 'unicorn'
 gem 'fog'
 gem 'dotenv-rails'
-# 矯正ツール
 gem 'rubocop', require: false # Rails校正ツール
-
+gem 'meta-tags'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

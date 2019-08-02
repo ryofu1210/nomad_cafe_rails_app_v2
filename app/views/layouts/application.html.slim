@@ -1,8 +1,9 @@
 doctype html
 html
   head
-    title
-      | NomadCafeRailsAppV2
+    / title
+    /   | 東京ノマドカフェ
+    = display_meta_tags(default_meta_tags)
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
