@@ -24,7 +24,7 @@ $(function(){
   setTimeout("$('.flash').fadeOut('slow')", 3000) 
 })
 
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("turbolinks:load", ()=>{
   const el = document.querySelector("#post_area");
   if(el != null) {
     el.addEventListener("change", ()=>{
