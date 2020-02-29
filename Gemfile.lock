@@ -403,7 +403,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (3.1.1)
-    puma (3.12.1)
+    puma (3.12.3)
     rack (2.0.7)
     rack-proxy (0.6.5)
       rack
@@ -640,7 +640,7 @@ DEPENDENCIES
   mysql2 (>= 0.3.18, < 0.6.0)
   pry
   pry-rails
-  puma (~> 3.11)
+  puma (~> 3.12)
   rails (~> 5.2.3)
   rails-erd
   rails-i18n (~> 5.1)
